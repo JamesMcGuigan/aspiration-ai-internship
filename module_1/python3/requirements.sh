@@ -55,8 +55,9 @@ for OS in UNIX WINDOWS; do
     fi;
 
     # pip-compile without argument requires ./requirements.txt to exist
-    if [[ ! -f ./requirements.in  ]]; then touch ./requirements.in;  fi;
-    if [[ ! -f ./requirements.txt ]]; then touch ./requirements.txt; fi;
+    if [[ ! -f ./requirements.in   ]]; then touch ./requirements.in;   fi;
+    if [[ ! -f ./requirements.txt  ]]; then touch ./requirements.txt;  fi;
+    if [[ ! -f ./.pythonstartup.py ]]; then touch ./.pythonstartup.py; fi;
 
     # Use pip and python from inside the virtualenv
     source $VENV_ACTIVATE
