@@ -1,3 +1,16 @@
 # IDE
 .DS_Store
 .idea
+
+
+# Ignored file extensions
+*.wip.*
+*.wip
+
+
+# Python
+venv
+venv_windows
+*.pyc
+*.pyo
+*.pyd
