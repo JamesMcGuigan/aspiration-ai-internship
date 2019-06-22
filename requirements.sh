@@ -50,7 +50,8 @@ for OS in UNIX WINDOWS; do
             perl -p -i -e "s/\"(C:.*)\"/'\$1'/g"       $VENV_ACTIVATE  # BUGFIX: syntax error near unexpected token `(' if [ "x(venv) " != x ] ; then'
         fi
         echo "export PATH=$VENV_BIN:\$PATH"                                      >> $VENV_ACTIVATE
-        echo 'export PYTHONSTARTUP=./.pythonstartup.py'                          >> $VENV_ACTIVATE
+        echo "export PYTHONSTARTUP=./.pythonstartup.py"                          >> $VENV_ACTIVATE
+        echo "export PYTHONPATH='`pwd`'"                                         >> $VENV_ACTIVATE
         echo "PS1=\"($VENV) \$(echo \$PS1 | perl -p -e 's/^(\s*\(.*?\))+//g')\"" >> $VENV_ACTIVATE  # BUGFIX: $PS1 prompt
     fi;
 
