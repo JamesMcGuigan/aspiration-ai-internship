@@ -1,6 +1,15 @@
 # Aspiration AI Internship
 
-Welcome!
+## Execute
+```
+./requirements.sh
+source venv/bin/activate
+python3 ./module_1/python3/main.py
+```
+
+
+## Welcome
+[http://www.aspiration.ai/machine-learning/internship/]
 
 Investment Bankers . CA's . Hedge Fund / Portfolio Managers . Forex traders . Commodities Analysts. These have been historically considered to be among the most coveted professions of all time. Yet, if one fails to keep up with the demands of the day, one would find one's skills to be obsolete in this era of data analysis.
 
@@ -11,5 +20,4 @@ Data Science has been incremental in providing powerful insights ( which people 
 The following program is designed to both test your knowledge and to give you the feel and experience of a real world financial world - data science problem. 
 
 
-- [http://www.aspiration.ai/machine-learning/internship/]
-
+ 
