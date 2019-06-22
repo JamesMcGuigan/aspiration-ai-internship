@@ -1,15 +1,20 @@
 import pandas as pd
-import datetime
+
 
 class StockAnalysis:
     dateformat = '%d-%b-%Y'
 
     def __init__( self, filename: str ):
-        """ 1.1 Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe. """
+        ### 1.1 Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe.
         self.filename = filename
-        self.data = pd.read_csv(self.filename)\
-            .rename(lambda x: x.replace(' ', '_'), axis=1)  # Rename columns without spaces
+        self.data = pd.read_csv(self.filename, parse_dates=['Date'] )        # parse_dates=['Date'] cast to Timestamp
+        self.data = self.data.rename(lambda x: x.replace(' ', '_'), axis=1)  # Rename columns without spaces
         self.data = self.filter_not_eq(self.data)
+
+        ### 1.3 Change the date column from 'object' type to 'datetime64(ns)' | WORKAROUND: cast to pd.Timestamp instead
+        # self.data['Date'] = pd.to_datetime(self.data['Date'])              # Cast to Timestamp without parse_dates=["Date"]
+        # self.data['Date'] = self.data['Date'].map(lambda date: np.datetime64(date.value, 'ns')) # BUG: Cast to datetime64 returns Timestamp
+        # print( type(self.data['Date'][0]), self.data['Date'][0] )                               # BUG: Cast to datetime64 returns Timestamp
 
 
     def print(self):
@@ -28,9 +33,8 @@ class StockAnalysis:
 
     @staticmethod
     def filter_days( data: pd.DataFrame, days=90 ) -> pd.DataFrame:
-        date_end    = data['Date'].max()
-        date_end    = datetime.datetime.strptime( date_end, StockAnalysis.dateformat )  # cast to datetime
-        date_cutoff = date_end - pd.to_timedelta(90, unit='d')
+        date_end:    pd.Timestamp = data['Date'].max()
+        date_cutoff: pd.Timestamp = date_end - pd.to_timedelta(90, unit='d')
         return data[data.Date > str(date_cutoff)]
 
 
