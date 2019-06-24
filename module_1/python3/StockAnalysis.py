@@ -43,6 +43,7 @@ class StockAnalysis:
         print('\nself.stats_vwap()\n',                   self.stats_vwap_by_month())
         print('\nself.stats_average_price()\n',          simplejson.dumps(self.stats_average_price(), indent=4*' '))
         print('\nself.stats_profit_loss_percentage()\n', simplejson.dumps(self.stats_profit_loss_percentage(), indent=4*' '))
+        print('\nself.stats_quantity_trend()\n',         simplejson.dumps(self.stats_quantity_trend(), indent=4*' '))
 
 
     @staticmethod
@@ -160,3 +161,14 @@ class StockAnalysis:
             "6 months": self.profit_loss_percentage(self.data, round(365/12 * 6)),
             "1 year":   self.profit_loss_percentage(self.data, 365),
         }
+
+    def stats_quantity_trend(self) -> dict:
+        """ 1.8: Find the average and median values of the column 'Total Traded Quantity' for each of the types of 'Trend'. """
+        trends = {}
+        groups_df = self.data.groupby(['Trend'])
+        for key, group_df in groups_df:
+            trends[key] = {
+                "mean":   round( group_df['Total_Traded_Quantity'].mean(),   2),
+                "median": round( group_df['Total_Traded_Quantity'].median(), 2),
+            }
+        return trends
