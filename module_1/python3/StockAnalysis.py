@@ -8,9 +8,9 @@ import simplejson
 class StockAnalysis:
     dateformat = '%d-%b-%Y'
 
-    def __init__(self, csv_input_filename: str, csv_output_filename: str = None):
+    def __init__(self, input_csv_filename: str, output_csv_filename: str = None):
         ### 1.1: Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe.
-        self.filename = csv_input_filename
+        self.filename = input_csv_filename
         self.data = pd.read_csv(self.filename, parse_dates=['Date'] )        # parse_dates=['Date'] cast to Timestamp
         self.data = self.data.rename(lambda x: re.sub(r'[^\w\s]+', '', x).replace(r' ', '_'), axis=1)  # Rename columns without spaces
         self.data = self.filter_not_eq(self.data)
@@ -32,8 +32,8 @@ class StockAnalysis:
         self.data['Trend'] = self.data['Day_Perc_Change'].map(self.trend)
 
         ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
-        if csv_output_filename is not None:
-            self.data.to_csv(csv_output_filename)
+        if output_csv_filename is not None:
+            self.data.to_csv(output_csv_filename)
 
 
     def print(self):
