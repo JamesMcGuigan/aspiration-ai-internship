@@ -2,7 +2,7 @@
 from module_1.python3.StockAnalysis import StockAnalysis
 
 def main():
-    StockAnalysis('./data/stocks/Mid_Cap/MUTHOOTFIN.csv').print()
+    StockAnalysis('./data/stocks/Mid_Cap/MUTHOOTFIN.csv', './data/output/week2.csv').print()
 
 if __name__ == "__main__":
     main()
