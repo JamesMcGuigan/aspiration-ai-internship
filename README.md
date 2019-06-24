@@ -4,7 +4,7 @@
 ```
 ./requirements.sh
 source venv/bin/activate
-python3 ./module_1/python3/main.py
+python3 ./src/module_1/python3/main.py
 ```
 
 

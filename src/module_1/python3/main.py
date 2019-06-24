@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from module_1.python3.StockAnalysis import StockAnalysis
+from src.module_1.python3 import StockAnalysis
 
 def main():
     StockAnalysis('./data/stocks/Mid_Cap/MUTHOOTFIN.csv') \
