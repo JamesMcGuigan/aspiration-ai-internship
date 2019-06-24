@@ -3,7 +3,7 @@ from src.module_1.python3 import StockAnalysis
 
 def main():
     StockAnalysis('./data/stocks/Mid_Cap/MUTHOOTFIN.csv') \
-        .write('./data/output/week2.csv') \
+        .write('./data/output/week2-python.csv') \
         .print()
 
 if __name__ == "__main__":

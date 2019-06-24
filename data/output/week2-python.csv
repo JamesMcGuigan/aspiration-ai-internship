@@ -1,4 +1,4 @@
-,Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,_Dly_Qt_to_Traded_Qty,Date_Month,Date_Year,Day_Perc_Change,Trend
+,Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percent_Dly_Qt_to_Traded_Qty,Date_Month,Date_Year,Day_Perc_Change,Trend
 1,MUTHOOTFIN,NB,2017-05-15,1750.0,1750.0,1750.0,1750.0,1750.0,1750.0,1750.0,50,87500.0,1,50,100.0,5,2017,0.0,Slight
 3,MUTHOOTFIN,N9,2017-05-16,1015.97,1010.0,1010.0,1010.0,1010.0,1010.0,1010.0,11,11110.0,1,11,100.0,5,2017,-0.4228571428571428,Slight
 4,MUTHOOTFIN,NB,2017-05-16,1750.0,1750.0,1750.0,1750.0,1750.0,1750.0,1750.0,7,12250.0,1,7,100.0,5,2017,0.7326732673267327,Slight positive
