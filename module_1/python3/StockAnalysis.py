@@ -1,6 +1,7 @@
 import re
 
 import pandas as pd
+import simplejson
 
 
 class StockAnalysis:
@@ -26,10 +27,12 @@ class StockAnalysis:
     def print(self):
         print(self.__class__.__name__)
         print(self.filename)
-        print('\nself.data.head()\n',     self.data.head())
-        print('\nself.data.describe()\n', self.data.describe())
-        print('\nself.stats_90_day_close_price()\n', self.stats_90_day_close_price())
-        print('\nself.stats_vwap()\n', self.stats_vwap_by_month())
+        print('\nself.data.head()\n',                    self.data.head())
+        print('\nself.data.describe()\n',                self.data.describe())
+        print('\nself.stats_90_day_close_price()\n',     self.stats_90_day_close_price())
+        print('\nself.stats_vwap()\n',                   self.stats_vwap_by_month())
+        print('\nself.stats_average_price()\n',          simplejson.dumps(self.stats_average_price(), indent=4*' '))
+        print('\nself.stats_profit_loss_percentage()\n', simplejson.dumps(self.stats_profit_loss_percentage(), indent=4*' '))
 
 
     @staticmethod
@@ -37,37 +40,52 @@ class StockAnalysis:
         """  1.1 remove all the rows where 'Series' column is NOT 'EQ' """
         return data[data.Series != 'EQ']
 
+    @staticmethod
+    def filter_days(df: pd.DataFrame, days=-1) -> pd.DataFrame:
+        if days <= -1: return df  # BUGFIX: pd.to_timedelta(math.inf) == {OverflowError}cannot convert float infinity to integer
+
+        date_end:    pd.Timestamp = df['Date'].max()
+        date_cutoff: pd.Timestamp = date_end - pd.to_timedelta(round(days), unit='d')
+        return df[df.Date > str(date_cutoff)]
 
     @staticmethod
-    def filter_days( data: pd.DataFrame, days=90 ) -> pd.DataFrame:
-        date_end:    pd.Timestamp = data['Date'].max()
-        date_cutoff: pd.Timestamp = date_end - pd.to_timedelta(90, unit='d')
-        return data[data.Date > str(date_cutoff)]
+    def vwap(df: pd.DataFrame) -> float:
+        vwap = (df.Close_Price + df.Total_Traded_Quantity).sum() \
+               / df.Total_Traded_Quantity.sum()
+        return round(vwap, 2)
+
+    @staticmethod
+    def average_price(df: pd.DataFrame, days=-1) -> float:
+        """ 1.5 Write a function to calculate the average price over the last N days of the stock price data where N is a user defined parameter. """
+        df_days       = StockAnalysis.filter_days(df, days)
+        average_price = df_days.Close_Price.mean()
+        return round(average_price, 2)
+
+    @staticmethod
+    def profit_loss_percentage(df: pd.DataFrame, days=-1) -> float:
+        """ 1.5 Write a second function to calculate the profit/loss percentage over the last N days. """
+        df_days     = StockAnalysis.filter_days(df, days)
+        close_price = df_days.Close_Price.values
+        profit      = (close_price[-1] - close_price[0]) / close_price[-1]
+        profit_pc   = profit * 100
+        return round(profit_pc, 2)  # return as percentage
 
 
     def stats_90_day_close_price(self) -> dict:
         """ 1.2 Calculate the maximum, minimum and mean price for the last 90 days. (price=Closing Price unless stated otherwise) """
         data_90_days = self.filter_days(self.data, 90)
         stats = {
-            "min":  data_90_days['Close_Price'].min(),
-            "max":  data_90_days['Close_Price'].max(),
-            "mean": data_90_days['Close_Price'].mean(),
+            "min":  data_90_days.Close_Price.min(),
+            "max":  data_90_days.Close_Price.max(),
+            "mean": data_90_days.Close_Price.mean(),
         }
         stats = { k: round(v,2) for k,v in stats.items() }  # round to 2dp
         return stats
 
 
-    @staticmethod
-    def vwap(group_df: pd.DataFrame) -> float:
-        vwap = (group_df.Close_Price + group_df.Total_Traded_Quantity).sum() \
-               / group_df.Total_Traded_Quantity.sum()
-        return vwap
-
-
     def stats_vwap_by_month(self) -> pd.DataFrame:
         """
         1.4 Calculate the monthwise VWAP = sum(price*volume)/sum(volume)
-        :return:
         """
         vwap = {}
         groupByMonth = self.data.groupby(['Date_Year', 'Date_Month'])
@@ -81,3 +99,31 @@ class StockAnalysis:
         vwap_df[["Year", "Month"]] = vwap_df[["Year", "Month"]].apply(pd.to_numeric, downcast='integer')
         return vwap_df
 
+
+    def stats_average_price(self) -> dict:
+        """
+        1.5 Calculate the average price AND the profit/loss percentages over the course of
+        last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
+        """
+        return {
+            "1 week":   self.average_price(self.data, 7*1),
+            "2 weeks":  self.average_price(self.data, 7*2),
+            "1 month":  self.average_price(self.data, round(365/12 * 1)),
+            "2 months": self.average_price(self.data, round(365/12 * 2)),
+            "6 months": self.average_price(self.data, round(365/12 * 6)),
+            "1 year":   self.average_price(self.data, 365),
+        }
+
+    def stats_profit_loss_percentage(self) -> dict:
+        """
+        1.5 Calculate the average price AND the profit/loss percentages over the course of
+        last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
+        """
+        return {
+            "1 week":   self.profit_loss_percentage(self.data, 7*1),
+            "2 weeks":  self.profit_loss_percentage(self.data, 7*2),
+            "1 month":  self.profit_loss_percentage(self.data, round(365/12 * 1)),
+            "2 months": self.profit_loss_percentage(self.data, round(365/12 * 2)),
+            "6 months": self.profit_loss_percentage(self.data, round(365/12 * 6)),
+            "1 year":   self.profit_loss_percentage(self.data, 365),
+        }

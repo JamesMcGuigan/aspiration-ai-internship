@@ -22,4 +22,5 @@ typing
 # Code Dependencies
 numpy
 pandas
+simplejson
 
