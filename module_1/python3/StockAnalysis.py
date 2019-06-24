@@ -1,3 +1,4 @@
+import math
 import re
 
 import pandas as pd
@@ -8,20 +9,24 @@ class StockAnalysis:
     dateformat = '%d-%b-%Y'
 
     def __init__( self, filename: str ):
-        ### 1.1 Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe.
+        ### 1.1: Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe.
         self.filename = filename
         self.data = pd.read_csv(self.filename, parse_dates=['Date'] )        # parse_dates=['Date'] cast to Timestamp
         self.data = self.data.rename(lambda x: re.sub(r'[^\w\s]+', '', x).replace(r' ', '_'), axis=1)  # Rename columns without spaces
         self.data = self.filter_not_eq(self.data)
 
-        ### 1.3 Change the date column from 'object' type to 'datetime64(ns)' | WORKAROUND: cast to pd.Timestamp instead
+        ### 1.3: Change the date column from 'object' type to 'datetime64(ns)' | WORKAROUND: cast to pd.Timestamp instead
         # self.data['Date'] = pd.to_datetime(self.data['Date'])              # Cast to Timestamp without parse_dates=["Date"]
         # self.data['Date'] = self.data['Date'].map(lambda date: np.datetime64(date.value, 'ns')) # BUG: Cast to datetime64 returns Timestamp
         # print( type(self.data['Date'][0]), self.data['Date'][0] )                               # BUG: Cast to datetime64 returns Timestamp
 
-        ### 1.4 Hint : Create a new dataframe column ‘Month’ + 'Year'
+        ### 1.4: Create a new dataframe column ‘Month’ + 'Year'
         self.data['Date_Month'] = self.data['Date'].map(lambda date: date.month)
         self.data['Date_Year']  = self.data['Date'].map(lambda date: date.year)
+
+        ### 1.6: Add a column 'Day_Perc_Change' where the values are the daily change in percentages
+        self.data['Day_Perc_Change'] = self.data['Close_Price'].pct_change() \
+                                           .map(lambda x: x if not math.isnan(x) else 0 )
 
 
     def print(self):
