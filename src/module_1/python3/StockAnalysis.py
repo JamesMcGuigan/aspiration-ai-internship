@@ -12,7 +12,7 @@ class StockAnalysis:
         ### 1.1: Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe.
         self.filename = input_csv_filename
         self.data = pd.read_csv(self.filename, parse_dates=['Date'] )        # parse_dates=['Date'] cast to Timestamp
-        self.data = self.data.rename(lambda x: re.sub(r'[^\w\s]+', '', x).replace(r' ', '_'), axis=1)  # Rename columns without spaces
+        self.data = self.data.rename(lambda x: re.sub(r'%', 'Percent', x).replace('.', '').replace(' ', '_'), axis=1)  # Rename columns without spaces
         self.data = self.filter_not_eq(self.data)
 
         ### 1.3: Change the date column from 'object' type to 'datetime64(ns)' | WORKAROUND: cast to pd.Timestamp instead
