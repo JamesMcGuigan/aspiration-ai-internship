@@ -8,7 +8,7 @@ import simplejson
 class StockAnalysis:
     dateformat = '%d-%b-%Y'
 
-    def __init__(self, input_csv_filename: str, output_csv_filename: str = None):
+    def __init__(self, input_csv_filename: str):
         ### 1.1: Import the csv file of the stock of your choosing using 'pd.read_csv()' function into a dataframe.
         self.filename = input_csv_filename
         self.data = pd.read_csv(self.filename, parse_dates=['Date'] )        # parse_dates=['Date'] cast to Timestamp
@@ -31,10 +31,6 @@ class StockAnalysis:
         ### 1.7: Add another column 'Trend' whose values
         self.data['Trend'] = self.data['Day_Perc_Change'].map(self.trend)
 
-        ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
-        if output_csv_filename is not None:
-            self.data.to_csv(output_csv_filename)
-
 
     def print(self):
         print(self.__class__.__name__)
@@ -46,7 +42,13 @@ class StockAnalysis:
         print('\nself.stats_average_price()\n',          simplejson.dumps(self.stats_average_price(), indent=4*' '))
         print('\nself.stats_profit_loss_percentage()\n', simplejson.dumps(self.stats_profit_loss_percentage(), indent=4*' '))
         print('\nself.stats_quantity_trend()\n',         simplejson.dumps(self.stats_quantity_trend(), indent=4*' '))
+        return self  # for chaining
 
+
+    def write(self, output_csv_filename):
+        ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
+        self.data.to_csv(output_csv_filename)
+        return self  # for chaining
 
     @staticmethod
     def filter_not_eq( data: pd.DataFrame ) -> pd.DataFrame:
