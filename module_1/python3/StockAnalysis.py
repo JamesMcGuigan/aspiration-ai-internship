@@ -28,6 +28,11 @@ class StockAnalysis:
         self.data['Day_Perc_Change'] = self.data['Close_Price'].pct_change() \
                                            .map(lambda x: x if not math.isnan(x) else 0 )
 
+        ### 1.7: Add another column 'Trend' whose values
+        self.data['Trend'] = self.data['Day_Perc_Change'].map(self.trend)
+
+        pass
+
 
     def print(self):
         print(self.__class__.__name__)
@@ -75,6 +80,30 @@ class StockAnalysis:
         profit_pc   = profit * 100
         return round(profit_pc, 2)  # return as percentage
 
+    @staticmethod
+    def trend( day_perc_change: float ) -> str:
+        """
+        1.7 Add another column 'Trend' whose values are:
+            'Slight or No change' for 'Day_Perc_Change' in between -0.5 and 0.5
+            'Slight positive' for 'Day_Perc_Change' in between 0.5 and 1
+            'Slight negative' for 'Day_Perc_Change' in between -0.5 and -1
+            'Positive' for 'Day_Perc_Change' in between 1 and 3
+            'Negative' for 'Day_Perc_Change' in between -1 and -3
+            'Among top gainers' for 'Day_Perc_Change' in between 3 and 7
+            'Among top losers' for 'Day_Perc_Change' in between -3 and -7
+            'Bull run' for 'Day_Perc_Change' >7
+            'Bear drop' for 'Day_Perc_Change' <-7
+        """
+        if -0.5 <= day_perc_change <=  0.5: return 'Slight'
+        if  0.5 <= day_perc_change <=  1:   return 'Slight positive'
+        if -0.5 >= day_perc_change >= -1:   return 'Slight negative'
+        if  1   <= day_perc_change <=  3:   return 'Positive'
+        if -1   >= day_perc_change >= -3:   return 'Negative'
+        if  3   <= day_perc_change <=  7:   return 'Among top gainers'
+        if -3   >= day_perc_change >= -7:   return 'Among top losers'
+        if         day_perc_change >   7:   return 'Bull run'
+        if         day_perc_change <  -7:   return 'Bear drop'
+
 
     def stats_90_day_close_price(self) -> dict:
         """ 1.2 Calculate the maximum, minimum and mean price for the last 90 days. (price=Closing Price unless stated otherwise) """
@@ -86,7 +115,6 @@ class StockAnalysis:
         }
         stats = { k: round(v,2) for k,v in stats.items() }  # round to 2dp
         return stats
-
 
     def stats_vwap_by_month(self) -> pd.DataFrame:
         """
