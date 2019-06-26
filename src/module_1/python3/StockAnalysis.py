@@ -21,12 +21,14 @@ class StockAnalysis:
         # print( type(self.data['Date'][0]), self.data['Date'][0] )                               # BUG: Cast to datetime64 returns Timestamp
 
         ### 1.4: Create a new dataframe column ‘Month’ + 'Year'
-        self.data['Date_Month'] = self.data['Date'].map(lambda date: date.month)
         self.data['Date_Year']  = self.data['Date'].map(lambda date: date.year)
+        self.data['Date_Month'] = self.data['Date'].map(lambda date: date.month)
+
 
         ### 1.6: Add a column 'Day_Perc_Change' where the values are the daily change in percentages
         self.data['Day_Perc_Change'] = self.data['Close_Price'].pct_change() \
-                                           .map(lambda x: x if not math.isnan(x) else 0 )
+                                           .map(lambda x: x if not math.isnan(x) else 0 ) \
+                                           .map(lambda x: round(x, 2) )
 
         ### 1.7: Add another column 'Trend' whose values
         self.data['Trend'] = self.data['Day_Perc_Change'].map(self.trend)
@@ -48,6 +50,7 @@ class StockAnalysis:
     def write(self, output_csv_filename):
         ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
         self.data.to_csv(output_csv_filename)
+        print('Wrote: ', output_csv_filename)
         return self  # for chaining
 
     @staticmethod
@@ -57,7 +60,7 @@ class StockAnalysis:
 
     @staticmethod
     def filter_days(df: pd.DataFrame, days=None) -> pd.DataFrame:
-        if days <= None: return df  # BUGFIX: pd.to_timedelta(math.inf) == {OverflowError}cannot convert float infinity to integer
+        if days is None: return df  # BUGFIX: pd.to_timedelta(math.inf) == {OverflowError}cannot convert float infinity to integer
 
         date_end:    pd.Timestamp = df['Date'].max()
         date_cutoff: pd.Timestamp = date_end - pd.to_timedelta(round(days), unit='d')
@@ -65,7 +68,7 @@ class StockAnalysis:
 
     @staticmethod
     def vwap(df: pd.DataFrame) -> float:
-        vwap = (df.Close_Price + df.Total_Traded_Quantity).sum() \
+        vwap = (df.Close_Price * df.Total_Traded_Quantity).sum() \
                / df.Total_Traded_Quantity.sum()
         return round(vwap, 2)
 

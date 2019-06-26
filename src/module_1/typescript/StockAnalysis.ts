@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import csv from '../../../node_modules/csv/lib/sync.js';
 import fs from 'fs';
+import ss from '../../../node_modules/simple-statistics/dist/simple-statistics.js';
 import 'datejs';
+// import moment, { Moment } from '../../../node_modules/moment/moment';
+// moment['suppressDeprecationWarnings'] = true;  // BUGFIX: TS2339: Property 'suppressDeprecationWarnings' does not exist on type 'typeof moment'.
 
 export default
 class StockAnalysis {
@@ -41,17 +44,23 @@ class StockAnalysis {
                 // 1.3: Change the date column from 'object' type to 'datetime64(ns)'
                 // BUGFIX: Date.parse('N9') == "2019-06-24T22:35:20.752Z"
                 if( value.match(/\b\d{1,2}\b/) && value.match(/\b\d{4}\b/) ) {  // contains both day and year
+                    //// date.js
                     let value_date = Date.parse(value);
                     if( value_date ) {
                         return new Date(value_date);
                     }
+                    //// moment.js
+                    // const value_date = moment(value);
+                    // if( value_date.isValid() ) {
+                    //     return value_date;
+                    // }
                 }
                 return value;
             }
         });
     }
 
-    protected _filter_csv( data: Array<Object> ): Array<Object> {
+    _filter_csv( data: Array<Object> ): Array<Object> {
         // 1.1 remove all the rows where 'Series' column is NOT 'EQ'
         return _(data)
             .filter((row) => row['Series'] != "EQ")
@@ -59,7 +68,15 @@ class StockAnalysis {
         ;
     }
 
-    protected _extend_csv( data: Array<Object> ): Array<Object> {
+    _filter_days( data: Array<Object>, days?: Number ): Array<Object> {
+        if( days === undefined ) { return data; }
+
+        let date_end    = _(data).map("Date").max();
+        let date_cutoff = date_end.clone().add(-days).days();  // DateJS/Moment operations modify existing variable
+        return _.filter(data, (row) => row['Date'] > date_cutoff);
+    }
+
+    _extend_csv( data: Array<Object> ): Array<Object> {
         return _(data)
             // 1.4: Create a new dataframe column ‘Month’ + 'Year'
             .map((row) => {
@@ -67,7 +84,7 @@ class StockAnalysis {
                 return {
                     ...row,
                     'Date_Year':  date.getFullYear(),
-                    'Date_Month': date.getMonth()
+                    'Date_Month': date.getMonth() + 1,  // NOTE: Javascript dates are zero indexed
                 }
             })
             .map((row, index, data) => {
@@ -88,11 +105,32 @@ class StockAnalysis {
         let csv_string = csv.stringify(this.data, {
             header: true,
             cast: {
-                date: (value) => value.format('Y-m-d')
+                number: (value, context) => Number.isInteger(value) ? String(value) : value.toFixed(2),
+                date:   (value, context) => value.format('Y-m-d'), // DOCS: https://github.com/abritinthebay/datejs/wiki/Format-Specifiers
+                // object: (value, context) => {
+                //     if( moment.isMoment(value) ) {
+                //         return value.format('YYYY-MM-DD') // DOCS: https://momentjs.com/docs/#/displaying/
+                //     }
+                //     return value;
+                // },
             }
         });
         fs.writeFileSync(output_csv_filename, csv_string);
+        console.info(`Wrote: ${output_csv_filename}`);
         return this;
+    }
+
+    print(): StockAnalysis {
+        console.info(this.constructor.name);
+        console.info(this.filename);
+        console.info('\nthis.data.head()\n',                    _(this.data).take(5).value());
+        // console.info('\nthis.data.describe()\n',                      this.data.describe())  // DOCS: https://stratodem.github.io/pandas.js-docs/#dataframe ???
+        console.info('\nthis.stats_90_day_close_price()\n',     this.stats_90_day_close_price());
+        console.info('\nthis.stats_vwap_by_month()\n',          this.stats_vwap_by_month());
+        console.info('\nthis.stats_average_price()\n',          JSON.stringify(this.stats_average_price(), null, 4));
+        console.info('\nthis.stats_profit_loss_percentage()\n', JSON.stringify(this.stats_profit_loss_percentage(), null, 4));
+        console.info('\nthis.stats_quantity_trend()\n',         JSON.stringify(this.stats_quantity_trend(), null, 4));
+        return this  // for chaining
     }
 
     /**
@@ -120,7 +158,97 @@ class StockAnalysis {
         return "Error";
     }
 
-    print(): StockAnalysis {
-        return this;
+    vmap( data: Array<Object> ): Number {
+        let total = _(data).map((row) => row['Close_Price'] * row['Total_Traded_Quantity'] ).sum();
+        let price = _(data).map((row) => row['Total_Traded_Quantity'] ).sum();
+        return total / price;
     }
+
+    // 1.5 Write a function to calculate the average price over the last N days of the stock price data where N is a user defined parameter.
+    average_price( data: Array<Object>, days?: Number ): Number {
+        return _( this._filter_days(data, days) )
+            .map((row) => row['Close_Price'])
+            .mean()
+        ;
+    }
+
+    // 1.5 Write a second function to calculate the profit/loss percentage over the last N days
+    profit_loss_percentage( data: Array<Object>, days?: Number ): Number {
+        return _.chain( this._filter_days(data, days) )
+            .map((row) => row['Close_Price'])
+            .thru((prices) => (_.last(prices) - _.first(prices)) / _.first(prices) || 0 )
+            .thru((value)  => value * 100 )
+            .value()
+        ;
+    }
+
+
+    // 1.4 Calculate the monthwise VWAP = sum(price*volume)/sum(volume)
+    stats_vwap_by_month() {
+        const vwap = _(this.data)
+            .groupBy((row) => [ row['Date'].getFullYear(), row['Date'].getMonth()+1 ] )
+            .mapValues((group, _key) => this.vmap(group))
+            .value()
+        ;
+        return vwap;
+    }
+
+    stats_90_day_close_price() {
+        // 1.2 Calculate the maximum, minimum and mean price for the last 90 days. (price=Closing Price unless stated otherwise)
+        const data_90_days = this._filter_days(this.data, 90);
+        let stats = {
+            "min":  Number( _(data_90_days).map('Close_Price').min()  ),
+            "max":  Number( _(data_90_days).map('Close_Price').max()  ),
+            "mean": Number( _(data_90_days).map('Close_Price').mean() ),
+        };
+        return stats;
+    }
+
+    /**
+     * 1.5 Calculate the average price AND the profit/loss percentages over the course of
+     * last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
+     */
+    stats_average_price(): Object {
+        return {
+            "1 week":   this.average_price(this.data, 7 * 1),
+            "2 weeks":  this.average_price(this.data, 7 * 2),
+            "1 month":  this.average_price(this.data, Math.round(365 / 12 * 1)),
+            "2 months": this.average_price(this.data, Math.round(365 / 12 * 2)),
+            "6 months": this.average_price(this.data, Math.round(365 / 12 * 6)),
+            "1 year":   this.average_price(this.data, 365),
+        }
+    }
+
+    /**
+     * 1.5 Calculate the average price AND the profit/loss percentages over the course of
+     * last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
+     */
+    stats_profit_loss_percentage(): Object {
+        return {
+            "1 week":   this.profit_loss_percentage(this.data, 7 * 1),
+            "2 weeks":  this.profit_loss_percentage(this.data, 7 * 2),
+            "1 month":  this.profit_loss_percentage(this.data, Math.round(365 / 12 * 1)),
+            "2 months": this.profit_loss_percentage(this.data, Math.round(365 / 12 * 2)),
+            "6 months": this.profit_loss_percentage(this.data, Math.round(365 / 12 * 6)),
+            "1 year":   this.profit_loss_percentage(this.data, 365),
+        }
+    }
+
+    // 1.8: Find the average and median values of the column 'Total Traded Quantity' for each of the types of 'Trend'.
+    stats_quantity_trend(): Object {
+        const trends = _(this.data)
+            .groupBy('Trend')
+            .toPairs().sortBy(0).fromPairs()  // Sort by keys
+            .mapValues((group) =>
+                _.map(group,'Total_Traded_Quantity')
+            )
+            .mapValues((values) => ({
+                "mean":   ss.mean(   values as number[] ),
+                "median": ss.median( values as number[] ),
+            }))
+            .value()
+        ;
+        return trends;
+    }
+
 }
