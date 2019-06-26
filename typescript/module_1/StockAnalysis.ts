@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import csv from '../../../node_modules/csv/lib/sync.js';
+import csv from '../node_modules/csv/lib/sync.js';
 import fs from 'fs';
-import ss from '../../../node_modules/simple-statistics/dist/simple-statistics.js';
+import ss from '../node_modules/simple-statistics/dist/simple-statistics.js';
 import 'datejs';
 // import moment, { Moment } from '../../../node_modules/moment/moment';
 // moment['suppressDeprecationWarnings'] = true;  // BUGFIX: TS2339: Property 'suppressDeprecationWarnings' does not exist on type 'typeof moment'.
@@ -63,7 +63,7 @@ class StockAnalysis {
     _filter_csv( data: Array<Object> ): Array<Object> {
         // 1.1 remove all the rows where 'Series' column is NOT 'EQ'
         return _(data)
-            .filter((row) => row['Series'] != "EQ")
+            .filter((row) => row['Series'] !== "EQ")
             .value()
         ;
     }

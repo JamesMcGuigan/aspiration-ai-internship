@@ -1,25 +1,10 @@
 # IDE
 .DS_Store
-.idea
+.idea/workspace.xml
+.idea/tasks.xml
 
 
 # Ignored file extensions
 *.wip.*
 *.wip
-
-
-# Python
-venv
-venv_windows
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-
-
-# Node
-**/typescript/*.js
-**/typescript/*.js.map
-tsconfig.tsbuildinfo
-node_modules
-yarn-error.log
+*conflicted copy*.iml

@@ -1,10 +1,20 @@
 # Aspiration AI Internship
 
-## Execute
+## Python
 ```
+cd python3
 ./requirements.sh
 source venv/bin/activate
-python3 ./src/module_1/python3/main.py
+./clean.sh
+./main.py
+```
+
+## Typescript
+```
+cd typescript
+yarn
+yarn clean
+yarn start
 ```
 
 
