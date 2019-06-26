@@ -3,7 +3,7 @@
 # this file: <https://github.com/sol/hpack>.
 name: asperation-ai-internship
 version: '0.0.0'
-github: "JamesMcGuigan/asperation-ai-internship"
+github: "JamesMcGuigan/module-one"
 license: MIT
 author: "James McGuigan"
 maintainer: "James McGuigan"
@@ -23,11 +23,13 @@ ghc-options: -Wall
 library:
   dependencies:
   - base
-  source-dirs: library
+  source-dirs:
+  - module_1/library
+  - HelloWorld/library
 
 executables:
-  asperation-ai-internship:
-    source-dirs: executable
+  module-one:
+    source-dirs: module_1/executable
     main: Main.hs
     dependencies:
     - base
@@ -37,9 +39,20 @@ executables:
     - -threaded
     - -with-rtsopts=-N
 
+  HelloWorld:
+    source-dirs: HelloWorld/executable
+    main: Main.hs
+    dependencies:
+      - base
+      - asperation-ai-internship
+    ghc-options:
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N
+
 benchmarks:
-  asperation-ai-internship-benchmarks:
-    source-dirs: benchmark
+  module-one-benchmarks:
+    source-dirs: module_1/benchmark
     main: Main.hs
     dependencies:
     - base
@@ -50,9 +63,22 @@ benchmarks:
     - -threaded
     - -with-rtsopts=-N
 
+  hello-world-benchmarks:
+    source-dirs: HelloWorld/benchmark
+    main: Main.hs
+    dependencies:
+      - base
+      - asperation-ai-internship
+      - criterion
+    ghc-options:
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N
+
+
 tests:
-  asperation-ai-internship-test-suite:
-    source-dirs: test-suite
+  module-one-test-suite:
+    source-dirs: module_1/test-suite
     main: Main.hs
     dependencies:
     - base
@@ -63,3 +89,16 @@ tests:
     - -rtsopts
     - -threaded
     - -with-rtsopts=-N
+
+  HelloWorld-test-suite:
+    source-dirs: HelloWorld/test-suite
+    main: Main.hs
+    dependencies:
+      - base
+      - asperation-ai-internship
+      - tasty
+      - tasty-hspec
+    ghc-options:
+      - -rtsopts
+      - -threaded
+      - -with-rtsopts=-N

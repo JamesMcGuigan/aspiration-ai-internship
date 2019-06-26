@@ -13,5 +13,5 @@ main = do
 
 spec :: Spec
 spec = parallel $ do
-    it "is trivially true" $ do
+    it "HelloWorld is trivially true" $ do
         True `shouldBe` True
