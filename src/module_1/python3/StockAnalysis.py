@@ -56,8 +56,8 @@ class StockAnalysis:
         return data[data.Series != 'EQ']
 
     @staticmethod
-    def filter_days(df: pd.DataFrame, days=-1) -> pd.DataFrame:
-        if days <= -1: return df  # BUGFIX: pd.to_timedelta(math.inf) == {OverflowError}cannot convert float infinity to integer
+    def filter_days(df: pd.DataFrame, days=None) -> pd.DataFrame:
+        if days <= None: return df  # BUGFIX: pd.to_timedelta(math.inf) == {OverflowError}cannot convert float infinity to integer
 
         date_end:    pd.Timestamp = df['Date'].max()
         date_cutoff: pd.Timestamp = date_end - pd.to_timedelta(round(days), unit='d')
@@ -70,19 +70,19 @@ class StockAnalysis:
         return round(vwap, 2)
 
     @staticmethod
-    def average_price(df: pd.DataFrame, days=-1) -> float:
+    def average_price(df: pd.DataFrame, days=None) -> float:
         """ 1.5 Write a function to calculate the average price over the last N days of the stock price data where N is a user defined parameter. """
         df_days       = StockAnalysis.filter_days(df, days)
         average_price = df_days.Close_Price.mean()
         return round(average_price, 2)
 
     @staticmethod
-    def profit_loss_percentage(df: pd.DataFrame, days=-1) -> float:
+    def profit_loss_percentage(df: pd.DataFrame, days=None) -> float:
         """ 1.5 Write a second function to calculate the profit/loss percentage over the last N days. """
         df_days     = StockAnalysis.filter_days(df, days)
         close_price = df_days.Close_Price.values
         profit      = (close_price[-1] - close_price[0]) / close_price[-1]
-        profit_pc   = profit * 100
+        profit_pc   = profit * 100  # QUESTION: Should this return as 0.x fractional percentage or 0-100%
         return round(profit_pc, 2)  # return as percentage
 
     @staticmethod
