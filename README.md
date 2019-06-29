@@ -1,22 +1,5 @@
 # Aspiration AI Internship
 
-## Python
-```
-cd python3
-./requirements.sh
-source venv/bin/activate
-./clean.sh
-./main.py
-```
-
-## Typescript
-```
-cd typescript
-yarn
-yarn clean
-yarn start
-```
-
 
 ## Welcome
 [http://www.aspiration.ai/machine-learning/internship/]
@@ -28,6 +11,52 @@ Data Science has inarguably been the hottest domain of the decade, asserting its
 Data Science has been incremental in providing powerful insights ( which people didn't even know existed ) and helped massively increase the efficiency, helping everyone from a scalp trader to a long term debt investor. Accurate predictions, unbiased analysis, powerful tools that run through millions of rows of data in the blink of an eye have transformed the industry in ways we could've never imagined.
 
 The following program is designed to both test your knowledge and to give you the feel and experience of a real world financial world - data science problem. 
+
+
+## Setup
+
+#### Python
+```
+cd python3
+./requirements.sh
+source venv/bin/activate
+./clean.sh
+./main.sh
+```
+
+#### Typescript
+```
+cd typescript
+yarn
+yarn clean
+yarn start
+```
+
+
+## [Module 1](MODULE_1.md)
+
+- Read input CSV file
+- Cast string dates to datetime objects
+- Compute additional feature columns
+- Filter rows: by value + timestamp offset (last N days)
+- Calculate row statistics: maximum, minimum and mean
+- Calculate incremental statistics: Daily Percentage Change 
+- Calculate GroupBy(month) VWAP = sum(price*volume)/sum(volume)
+- Write output CSV file 
+
+#### Python
+```
+cd python3
+source venv/bin/activate
+python3 ./module_1/main.py
+```
+
+#### Typescript
+```
+cd typescript
+yarn start:module1
+```
+
 
 
  
