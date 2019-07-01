@@ -1,4 +1,4 @@
-package main.scala
+package module_1
 
 object CubeCalculator extends App {
 

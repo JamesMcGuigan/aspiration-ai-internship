@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customVMPath" />
+    <option name="linkedExternalProjectsSettings">
+      <SbtProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/scala" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/scala" />
+            <option value="$PROJECT_DIR$/scala/project" />
+          </set>
+        </option>
+        <option name="resolveSbtClassifiers" value="true" />
+        <option name="sbtVersion" value="0.13.17" />
+        <option name="useAutoImport" value="true" />
+      </SbtProjectSettings>
+    </option>
+  </component>
+</project>

@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/aspiration-ai-internship.iml" filepath="$PROJECT_DIR$/.idea/aspiration-ai-internship.iml" />
       <module fileurl="file://$PROJECT_DIR$/python3/python3.iml" filepath="$PROJECT_DIR$/python3/python3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scala/.idea/modules/scala.iml" filepath="$PROJECT_DIR$/scala/.idea/modules/scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scala/.idea/modules/scala-build.iml" filepath="$PROJECT_DIR$/scala/.idea/modules/scala-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/typescript/typescript.iml" filepath="$PROJECT_DIR$/typescript/typescript.iml" />
     </modules>
   </component>

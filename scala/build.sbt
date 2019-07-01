@@ -5,7 +5,7 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.7"
     )),
     name := "scala",
-    mainClass in (Compile, run) := Some("main.scala.CubeCalculator")
+    mainClass in (Compile, run) := Some("module_1.CubeCalculator")
   )
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test
