@@ -9,10 +9,12 @@ lazy val root = (project in file(".")).
   )
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.28"
 
 // DOCS: https://nrinaudo.github.io/kantan.csv/
 libraryDependencies += "com.nrinaudo" %% "kantan.csv" % "0.5.1"
 libraryDependencies += "com.nrinaudo" %% "kantan.csv-java8" % "0.5.1"
-//libraryDependencies += "com.nrinaudo" %% "kantan.csv-scalaz" % "0.5.1"
+libraryDependencies += "com.nrinaudo" %% "kantan.csv-scalaz" % "0.5.1"
 libraryDependencies += "com.nrinaudo" %% "kantan.csv-generic" % "0.5.1"
+
 

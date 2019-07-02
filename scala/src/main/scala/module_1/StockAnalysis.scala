@@ -8,5 +8,6 @@ object StockAnalysis extends App {
   val output_csv_filename: String = if (args.length >= 2) args(1) else "../data/output/week2-scala.csv"
 
   val reader: CsvReader[ReadResult[StockPrice]]  = StockPriceCSV.reader(input_csv_filename)
-  StockPriceCSV.print(reader)
+  val data: List[StockPrice] = StockPriceCSV.read(input_csv_filename)
+  StockPriceCSV.print(data)
 }
