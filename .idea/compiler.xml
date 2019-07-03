@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/scala/src/main/scala/module_1/StockPriceCSV.scala" />
+    </excludeFromCompile>
+  </component>
   <component name="HaskellBuildOptions">
     <ghcPath>/usr/local/bin/ghc</ghcPath>
     <cabalPath>/usr/local/bin/cabal</cabalPath>
@@ -8,6 +13,7 @@
   <component name="TypeScriptCompiler">
     <option name="recompileOnChanges" value="true" />
     <option name="scopeName" value="Module 'typescript'" />
+    <option name="showAllErrors" value="true" />
     <option name="typeScriptCompilerParams" value="--sourceMap true" />
     <option name="useConfig" value="true" />
   </component>
