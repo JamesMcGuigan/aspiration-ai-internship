@@ -27,7 +27,7 @@ class StockPrice(
   val Deliverable_Qty: Int,
   val Percentage_Dly_Qt_to_Traded_Qty: Float,
 ) {
-  val Year: Int = Date.getYear
+  val Year:  Int = Date.getYear
   val Month: Int = Date.getMonthValue
 
   // Implement case class style toString()
@@ -40,7 +40,6 @@ class StockPrice(
   }
 }
 object StockPrice {
-  // NOTE: Input and Output CSV formats are different to match Python and Typescript implementation specs
   val fieldNames: Array[String] = Utils.classFieldNames[StockPrice]
 
   def apply(
@@ -79,7 +78,45 @@ object StockPrice {
     )
   }
 
-  def unapply(stockPrice: StockPrice) = Option(
+  def apply(
+    Symbol: String,
+    Series: String,
+    Date: LocalDate,
+    Prev_Close: Float,
+    Open_Price: Float,
+    High_Price: Float,
+    Low_Price: Float,
+    Last_Price: Float,
+    Close_Price: Float,
+    Average_Price: Float,
+    Total_Traded_Quantity: Int,
+    Turnover: Float,
+    No_of_Trades: Int,
+    Deliverable_Qty: Int,
+    Percentage_Dly_Qt_to_Traded_Qty: Float,
+    Year: Int,
+    Month: Int,
+  ): StockPrice = {
+    new StockPrice(
+      Symbol,
+      Series,
+      Date,
+      Prev_Close,
+      Open_Price,
+      High_Price,
+      Low_Price,
+      Last_Price,
+      Close_Price,
+      Average_Price,
+      Total_Traded_Quantity,
+      Turnover,
+      No_of_Trades,
+      Deliverable_Qty,
+      Percentage_Dly_Qt_to_Traded_Qty
+    )
+  }
+
+  def unapply(stockPrice: StockPrice): (String, String, LocalDate, Float, Float, Float, Float, Float, Float, Float, Int, Float, Int, Int, Float, Int, Int) = (
     stockPrice.Symbol,
     stockPrice.Series,
     stockPrice.Date,
@@ -102,29 +139,7 @@ object StockPrice {
 
 
 object StockPriceCSV {
-
-  // DOCS: https://nrinaudo.github.io/kantan.csv/rows_as_case_classes.html
-  implicit lazy val StockPriceHeaderDecoder: HeaderDecoder[StockPrice] = HeaderDecoder.decoder(
-    "Symbol", "Series", "Date",
-    "Prev Close", "Open Price", "High Price", "Low Price", "Last Price", "Close Price",
-    "Average Price",
-    "Total Traded Quantity", "Turnover",
-    "No. of Trades", "Deliverable Qty", "% Dly Qt to Traded Qty"
-  )(StockPrice.apply)
-
-  //// BUG: https://stackoverflow.com/questions/6675419/in-scala-why-do-i-get-this-polymorphic-expression-cannot-be-instantiated-to-ex
-  //  implicit lazy val StockPriceHeaderEncoder: HeaderEncoder[StockPrice] =
-  //    HeaderEncoder.caseEncoder( StockPrice.fieldNames:_* )(StockPrice.unapply)
-
-  // TODO: pass in field names as spat:_* rather than hardcoding strings - keeps complaining about type signatures
-  // BUGFIX: No implicits found for parameter evidence$3: HeaderEncoder[StockPrice]
-  // BUG:    These values don't actually output to the CSV file
-  implicit lazy val StockPriceHeaderEncoder: HeaderEncoder[StockPrice] = HeaderEncoder.caseEncoder(
-    "Symbol","Series","Date","Prev_Close","Open_Price","High_Price","Low_Price",
-    "Last_Price","Close_Price","Average_Price","Total_Traded_Quantity",
-    "Turnover","No_of_Trades","Deliverable_Qty","Percentage_Dly_Qt_to_Traded_Qty",
-    "Year", "Month"
-  )(StockPrice.unapply)
+  // NOTE: Input and Output CSV formats are different to match Python and Typescript implementation specs
 
   // DOCS: https://nrinaudo.github.io/kantan.csv/java8.html
   implicit lazy val StockPriceCellDecoder: CellDecoder[LocalDate] =
@@ -134,6 +149,38 @@ object StockPriceCSV {
     localDateEncoder(DateTimeFormatter.ISO_LOCAL_DATE)
 
 
+  //// DOCS: https://nrinaudo.github.io/kantan.csv/rows_as_case_classes.html
+  implicit lazy val headerDecoder: HeaderDecoder[StockPrice] = HeaderDecoder.decoder(
+    "Symbol", "Series", "Date",
+    "Prev Close", "Open Price", "High Price", "Low Price", "Last Price", "Close Price",
+    "Average Price",
+    "Total Traded Quantity", "Turnover",
+    "No. of Trades", "Deliverable Qty", "% Dly Qt to Traded Qty"
+  )(StockPrice.apply)
+
+  //// BROKEN REFACTOR
+  //// BUG: type mismatch;
+  //// [error]  found   : (String, String, java.time.LocalDate, Float, Float, Float, Float, Float, Float, Float, Int, Float, Int, Int, Float) => module_1.StockPrice
+  //// [error]  required: ? => module_1.StockPrice
+  //// [error]     HeaderDecoder.decoder( StockPrice.inputFieldNames:_* )( StockPrice.apply _ )
+  //  implicit lazy val headerDecoder: HeaderDecoder[StockPrice] =
+  //    HeaderDecoder.decoder( StockPrice.inputFieldNames:_* )( StockPrice.apply _ )
+
+
+  implicit lazy val headerEncoder: HeaderEncoder[StockPrice] = new HeaderEncoder[StockPrice] {
+    override def rowEncoder: RowEncoder[StockPrice] = RowEncoder.ordered(StockPrice.unapply _)
+    override val header = Some(StockPrice.fieldNames)
+  }
+
+  //// OLD IMPLEMENTATION
+  //// DONE:   pass in field names as spat:_* rather than hardcoding strings - keeps complaining about type signatures
+  //// BUG:    These values don't actually output to the CSV file
+  //  implicit lazy val StockPriceHeaderEncoder: HeaderEncoder[StockPrice] = HeaderEncoder.caseEncoder(
+  //    "Symbol","Series","Date","Prev_Close","Open_Price","High_Price","Low_Price",
+  //    "Last_Price","Close_Price","Average_Price","Total_Traded_Quantity",
+  //    "Turnover","No_of_Trades","Deliverable_Qty","Percentage_Dly_Qt_to_Traded_Qty",
+  //    "Year", "Month"
+  //  )(StockPrice.unapply)
 
 
   def reader(input_csv_filename: String): CsvReader[ReadResult[StockPrice]] = {
@@ -161,6 +208,8 @@ object StockPriceCSV {
     file.asCsvWriter[StockPrice]( rfc.withHeader(StockPrice.fieldNames:_*) )
         .write(data)
         .close()
+
+    println("Wrote: " + file.getAbsolutePath)
   }
 
   def print(input_csv_filename: String): Unit = {
