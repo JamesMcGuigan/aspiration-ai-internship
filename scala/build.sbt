@@ -10,6 +10,7 @@ lazy val root = (project in file(".")).
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.28"
+libraryDependencies += "org.clapper" %% "grizzled-scala" % "4.9.3"
 
 // DOCS: https://nrinaudo.github.io/kantan.csv/
 libraryDependencies += "com.nrinaudo" %% "kantan.csv" % "0.5.1"
