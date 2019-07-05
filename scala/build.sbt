@@ -17,4 +17,9 @@ libraryDependencies += "com.nrinaudo" %% "kantan.csv-java8" % "0.5.1"
 libraryDependencies += "com.nrinaudo" %% "kantan.csv-scalaz" % "0.5.1"
 libraryDependencies += "com.nrinaudo" %% "kantan.csv-generic" % "0.5.1"
 
-
+// DOCS: https://github.com/milessabin/shapeless
+libraryDependencies += "com.chuusai" %% "shapeless" % "2.3.3"
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
