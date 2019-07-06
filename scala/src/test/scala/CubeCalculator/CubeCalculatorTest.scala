@@ -1,4 +1,4 @@
-package module_1
+package CubeCalculator
 
 class CubeCalculatorTest extends org.scalatest.FunSuite {
   test("CubeCalculator.cube") {

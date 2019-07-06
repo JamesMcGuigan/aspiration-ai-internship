@@ -1,4 +1,4 @@
-package module_1
+package CubeCalculator
 
 object CubeCalculator extends App {
 
