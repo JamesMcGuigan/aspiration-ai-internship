@@ -23,12 +23,41 @@ class StockPrice(
 ) {
   val Year:  Int = Date.getYear
   val Month: Int = Date.getMonthValue
+  var Day_Perc_Change: Double = 0
+  var Trend: String = calcTrend()
+
+  def setYesterday( yesterday: StockPrice ): Unit = {
+    Day_Perc_Change = calc_Day_Perc_Change( yesterday )
+    Trend           = calcTrend()
+  }
+
+  def calc_Day_Perc_Change( yesterday: StockPrice ): Double = {
+    yesterday.Close_Price match {
+      case 0 => 0
+      case _ => (Close_Price - yesterday.Close_Price) / yesterday.Close_Price
+    }
+  }
+
+  def calcTrend(): String = {
+      if( -0.5 <= Day_Perc_Change && Day_Perc_Change  <=  0.5 ) { return "Slight" }
+      if(  0.5 <= Day_Perc_Change && Day_Perc_Change  <=  1   ) { return "Slight positive" }
+      if( -0.5 >= Day_Perc_Change && Day_Perc_Change  >= -1   ) { return "Slight negative" }
+      if(  1   <= Day_Perc_Change && Day_Perc_Change  <=  3   ) { return "Positive" }
+      if( -1   >= Day_Perc_Change && Day_Perc_Change  >= -3   ) { return "Negative" }
+      if(  3   <= Day_Perc_Change && Day_Perc_Change  <=  7   ) { return "Among top gainers" }
+      if( -3   >= Day_Perc_Change && Day_Perc_Change  >= -7   ) { return "Among top losers"  }
+      if(                            Day_Perc_Change  >   7   ) { return "Bull run"  }
+      if(                            Day_Perc_Change  <  -7   ) { return "Bear drop" }
+      return "Error"
+  }
+
+
 
   // Implement case class style toString()
   // DOCS: https://stackoverflow.com/questions/2016499/how-to-create-a-decent-tostring-method-in-scala-using-reflection/2017192
   override def toString: String = {
     val values = getClass.getDeclaredFields.map {
-      field:Field => field.get(this).toString
+      field:Field => field.get(this).toString  // BUG: Throws java.lang.NullPointerException on lazy vals
     }
     s"${getClass.getSimpleName}(${values.mkString(",")})"
   }
@@ -54,21 +83,8 @@ object StockPrice {
     Percentage_Dly_Qt_to_Traded_Qty: Double
   ): StockPrice = {
     new StockPrice(
-      Symbol,
-      Series,
-      Date,
-      Prev_Close,
-      Open_Price,
-      High_Price,
-      Low_Price,
-      Last_Price,
-      Close_Price,
-      Average_Price,
-      Total_Traded_Quantity,
-      Turnover,
-      No_of_Trades,
-      Deliverable_Qty,
-      Percentage_Dly_Qt_to_Traded_Qty
+      Symbol, Series, Date, Prev_Close, Open_Price, High_Price, Low_Price, Last_Price, Close_Price, Average_Price,
+      Total_Traded_Quantity, Turnover, No_of_Trades, Deliverable_Qty, Percentage_Dly_Qt_to_Traded_Qty
     )
   }
 
@@ -90,27 +106,20 @@ object StockPrice {
     Percentage_Dly_Qt_to_Traded_Qty: Double,
     Year: Int,
     Month: Int,
+    Day_Perc_Change: Double,
+    Trend: String,
   ): StockPrice = {
-    new StockPrice(
-      Symbol,
-      Series,
-      Date,
-      Prev_Close,
-      Open_Price,
-      High_Price,
-      Low_Price,
-      Last_Price,
-      Close_Price,
-      Average_Price,
-      Total_Traded_Quantity,
-      Turnover,
-      No_of_Trades,
-      Deliverable_Qty,
-      Percentage_Dly_Qt_to_Traded_Qty
+    val stockPrice = new StockPrice(
+      Symbol, Series, Date, Prev_Close, Open_Price, High_Price, Low_Price, Last_Price, Close_Price, Average_Price,
+      Total_Traded_Quantity, Turnover, No_of_Trades, Deliverable_Qty, Percentage_Dly_Qt_to_Traded_Qty
     )
+    // Ignore Year + Month
+    stockPrice.Day_Perc_Change = Day_Perc_Change
+    stockPrice.Trend = Trend
+    stockPrice
   }
 
-  def unapply(stockPrice: StockPrice): (String, String, LocalDate, Double, Double, Double, Double, Double, Double, Double, Int, Double, Int, Int, Double, Int, Int) = (
+  def unapply(stockPrice: StockPrice): (String, String, LocalDate, Double, Double, Double, Double, Double, Double, Double, Int, Double, Int, Int, Double, Int, Int, Double, String) = (
     stockPrice.Symbol,
     stockPrice.Series,
     stockPrice.Date,
@@ -128,6 +137,8 @@ object StockPrice {
     stockPrice.Percentage_Dly_Qt_to_Traded_Qty,
     stockPrice.Year,
     stockPrice.Month,
+    stockPrice.Day_Perc_Change,
+    stockPrice.Trend,
   )
 }
 
