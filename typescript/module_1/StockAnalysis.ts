@@ -91,8 +91,9 @@ class StockAnalysis {
                 // 1.6: Add a column 'Day_Perc_Change' where the values are the daily change in percentages
                 // 1.7: Add another column 'Trend'
                 // NOTE: pandas.Series.pct_change() doesn't multiply Day_Perc_Change * 100
-                let Last_Close_Price = _.get(data, [index - 1, 'Close_Price']);
-                let Day_Perc_Change  = (row['Close_Price'] - Last_Close_Price) / Last_Close_Price || 0;
+                let Today_Price      = row['Close_Price'];
+                let Yesterday_Price  = _.chain(data).get(index-1).get("Close_Price").value() || Today_Price;
+                let Day_Perc_Change  = (Today_Price - Yesterday_Price) / Yesterday_Price     || 0;
                 let Trend            = this.trend(Day_Perc_Change);
 
                 return { ...row, Day_Perc_Change, Trend };
@@ -130,8 +131,8 @@ class StockAnalysis {
     print(): StockAnalysis {
         console.info(this.constructor.name);
         console.info(this.filename);
-        console.info('\nthis.data.head()\n',                    _(this.data).take(1).value());
-        // console.info('\nthis.data.describe()\n',                      this.data.describe())  // DOCS: https://stratodem.github.io/pandas.js-docs/#dataframe ???
+        console.info('\nthis.data.head()\n',        _(this.data).take(1).value());
+        // console.info('\nthis.data.describe()\n', this.data.describe())  // DOCS: https://stratodem.github.io/pandas.js-docs/#dataframe ???
 
         console.info( JSON.stringify(this.stats(), null, 4) );
         return this  // for chaining
