@@ -101,7 +101,7 @@ class StockAnalysis {
         ;
     }
 
-    write( output_csv_filename: string ): StockAnalysis {
+    write_csv(output_csv_filename: string ): StockAnalysis {
         let csv_string = csv.stringify(this.data, {
             header: true,
             cast: {
@@ -120,17 +120,31 @@ class StockAnalysis {
         return this;
     }
 
+    write_stats(output_stats_filename: string): StockAnalysis {
+        let json_string = JSON.stringify(this.stats(), null, 4);
+        fs.writeFileSync(output_stats_filename, json_string);
+        console.info(`Wrote: ${output_stats_filename}`);
+        return this
+    }
+
     print(): StockAnalysis {
         console.info(this.constructor.name);
         console.info(this.filename);
-        console.info('\nthis.data.head()\n',                    _(this.data).take(5).value());
+        console.info('\nthis.data.head()\n',                    _(this.data).take(1).value());
         // console.info('\nthis.data.describe()\n',                      this.data.describe())  // DOCS: https://stratodem.github.io/pandas.js-docs/#dataframe ???
-        console.info('\nthis.stats_90_day_close_price()\n',     this.stats_90_day_close_price());
-        console.info('\nthis.stats_vwap_by_month()\n',          this.stats_vwap_by_month());
-        console.info('\nthis.stats_average_price()\n',          JSON.stringify(this.stats_average_price(), null, 4));
-        console.info('\nthis.stats_profit_loss_percentage()\n', JSON.stringify(this.stats_profit_loss_percentage(), null, 4));
-        console.info('\nthis.stats_quantity_trend()\n',         JSON.stringify(this.stats_quantity_trend(), null, 4));
+
+        console.info( JSON.stringify(this.stats(), null, 4) );
         return this  // for chaining
+    }
+
+    stats() {
+        return {
+            "stats_90_day_close_price":     this.stats_90_day_close_price(),
+            "stats_vwap_by_month":          this.stats_vwap_by_month(),
+            "stats_average_price":          this.stats_average_price(),
+            "stats_profit_loss_percentage": this.stats_profit_loss_percentage(),
+            "stats_quantity_trend":         this.stats_quantity_trend()
+        }
     }
 
     /**
@@ -186,7 +200,7 @@ class StockAnalysis {
     // 1.4 Calculate the monthwise VWAP = sum(price*volume)/sum(volume)
     stats_vwap_by_month() {
         const vwap = _(this.data)
-            .groupBy((row) => [ row['Date'].getFullYear(), row['Date'].getMonth()+1 ] )
+            .groupBy((row) => row['Date'].getFullYear() + '-' + (row['Date'].getMonth()+1) )
             .mapValues((group, _key) => this.vmap(group))
             .value()
         ;

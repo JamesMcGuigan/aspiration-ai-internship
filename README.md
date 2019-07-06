@@ -62,7 +62,7 @@ python3 ./module_1/main.py
 #### Typescript
 ```
 cd typescript
-yarn start:module1
+yarn start:module_1
 ```
 
 #### Scala

@@ -7,11 +7,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "clean":         "find ./module_*/ -name '*.js' -or -name '*.map' -print -delete",
-    "build":         "yarn clean; ./node_modules/.bin/tsc",
-    "watch":         "yarn clean; ./node_modules/.bin/tsc -w",
-    "start":         "yarn start:module1",
-    "start:module1": "yarn build; node --experimental-modules --es-module-specifier-resolution=node module_1/index.js"
+    "clean":          "find ./module_*/ -name '*.js' -or -name '*.map' -print -delete",
+    "build":          "yarn clean; ./node_modules/.bin/tsc",
+    "watch":          "yarn clean; ./node_modules/.bin/tsc -w",
+    "start":          "yarn start:module1",
+    "start:module_1": "yarn build; node --experimental-modules --es-module-specifier-resolution=node module_1/index.js"
   },
   "dependencies": {
     "csv": "^5.1.1",
