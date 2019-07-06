@@ -59,10 +59,12 @@ object StockAnalysis extends App {
     total / price
   }
 
-  def stats_vwap_by_month( stockPrices: List[StockPrice] ): Map[String,Double] = {
-    stockPrices
-      .groupBy(stockPrice => s"${stockPrice.Date.getYear}-${stockPrice.Date.getMonthValue}")
+  def stats_vwap_by_month( stockPrices: List[StockPrice] ): ListMap[String,Double] = {
+    val vwap_by_month = stockPrices
+      .groupBy(stockPrice => f"${stockPrice.Date.getYear}-${stockPrice.Date.getMonthValue}%02d")
       .mapValues(group => vwap(group))
+
+    ListMap( vwap_by_month.toSeq.sortBy(_._1):_* )  // months need to be zero padded to sort correctly
   }
 
   // 1.5 Write a function to calculate the average price over the last N days of the stock price data where N is a user defined parameter.
@@ -88,7 +90,7 @@ object StockAnalysis extends App {
   }
 
   // 1.2 Calculate the maximum, minimum and mean price for the last 90 days. (price=Closing Price unless stated otherwise)
-  def stats_90_day_close_price(stockPrices: List[StockPrice]): Map[String, Double] = {
+  def stats_90_day_close_price(stockPrices: List[StockPrice]): ListMap[String, Double] = {
     val prices = filter_days(this.stockPrices, 90).map(_.Close_Price)
 
     ListMap(
@@ -102,7 +104,7 @@ object StockAnalysis extends App {
     * 1.5 Calculate the average price AND the profit/loss percentages over the course of
     * last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
     */
-  def stats_average_price( stockPrices: List[StockPrice] ): Map[String, Double] = {
+  def stats_average_price( stockPrices: List[StockPrice] ): ListMap[String, Double] = {
     ListMap(
       "1 week"   -> average_price(stockPrices, 7 * 1),
       "2 weeks"  -> average_price(stockPrices, 7 * 2),
@@ -117,7 +119,7 @@ object StockAnalysis extends App {
     * 1.5 Calculate the average price AND the profit/loss percentages over the course of
     * last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
     */
-  def stats_profit_loss_percentage(stockPrices: List[StockPrice] ): Map[String, Double] = {
+  def stats_profit_loss_percentage(stockPrices: List[StockPrice] ): ListMap[String, Double] = {
     ListMap(
       "1 week"   -> profit_loss_percentage(stockPrices, 7 * 1),
       "2 weeks"  -> profit_loss_percentage(stockPrices, 7 * 2),

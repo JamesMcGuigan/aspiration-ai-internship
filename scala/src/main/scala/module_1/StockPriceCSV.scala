@@ -5,6 +5,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 import argonaut.Argonaut._
+import argonaut.PrettyParams
 import kantan.csv._
 import kantan.csv.java8.{localDateDecoder, localDateEncoder}
 import kantan.csv.ops._
@@ -83,8 +84,30 @@ object StockPriceCSV {
     println("Wrote: " + file.getAbsolutePath)
   }
 
+  val jsonPrettyParams = PrettyParams(
+    indent = "    ",
+    lbraceLeft = "",
+    lbraceRight = "\n",
+    rbraceLeft = "\n",
+    rbraceRight = "",
+    lbracketLeft = "",
+    lbracketRight = "\n",
+    rbracketLeft = "\n",
+    rbracketRight = "",
+    lrbracketsEmpty = "",
+    arrayCommaLeft = "",
+    arrayCommaRight = "\n",
+    objectCommaLeft = "",
+    objectCommaRight = "\n",
+    colonLeft = "",
+    colonRight = " ",
+    preserveOrder = true,
+    dropNullKeys = false,
+  )
+  
   def write_json( output_json_filename: String, data: Map[String, Map[String, Double]] ): Unit = {
-    val json_string: String = data.asJson.spaces4
+    val json_string: String = data.asJson.pretty( jsonPrettyParams )
+
     reflect.io.File(output_json_filename).writeAll(json_string)
     println("Wrote: " + output_json_filename)
   }
