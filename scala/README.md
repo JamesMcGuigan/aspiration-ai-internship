@@ -6,5 +6,11 @@ sbt clean
 sbt compile
 sbt run
 sbt test
-sbt "run-main module_1.CubeCalculator"
+
+sbt 'show discoveredMainClasses'
+```
+
+### Module 1
+```
+sbt "runMain module_1.StockAnalysis"
 ```

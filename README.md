@@ -32,6 +32,14 @@ yarn clean
 yarn start
 ```
 
+#### Scala
+```
+cd scala
+sbt clean
+sbt compile
+sbt run
+```
+
 
 ## [Module 1](MODULE_1.md)
 
@@ -57,6 +65,11 @@ cd typescript
 yarn start:module1
 ```
 
+#### Scala
+```
+cd scala
+sbt "runMain module_1.StockAnalysis"
+```
 
 
  
