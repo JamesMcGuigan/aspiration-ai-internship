@@ -22,11 +22,17 @@ object StockAnalysis extends App {
     println(input_csv_filename)
     println("\nstockPrices.take(5)");                 pprintln(stockPrices.take(5))
 
-    println("\nthis.stats_90_day_close_price()");     pprintln(stats_90_day_close_price(stockPrices))
-    println("\nthis.stats_vwap_by_month()");          pprintln(stats_vwap_by_month(stockPrices))
-    println("\nthis.stats_average_price()");          pprintln(stats_average_price(stockPrices))
-    println("\nthis.stats_profit_loss_percentage()"); pprintln(stats_profit_loss_percentage(stockPrices))
-    // println("\nthis.stats_quantity_trend()");      pprintln(stats_quantity_trend(stockPrices))
+    pprintln( stats(stockPrices) )
+  }
+
+  def stats( stockPrices: List[StockPrice] ) = {
+    Map(
+      "stats_90_day_close_price"     -> stats_90_day_close_price(stockPrices),
+      "stats_vwap_by_month"          -> stats_vwap_by_month(stockPrices),
+      "stats_average_price"          -> stats_average_price(stockPrices),
+      "stats_profit_loss_percentage" -> stats_profit_loss_percentage(stockPrices),
+      // "stats_quantity_trend"         -> stats_quantity_trend(stockPrices)
+    )
   }
 
 
