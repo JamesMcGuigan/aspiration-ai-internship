@@ -2,6 +2,8 @@ package module_1
 
 import java.time.LocalDate
 
+import pprint.pprintln
+
 import scala.Numeric._
 //import scala.util.chainingOps._  // Requires scala v2.13 - incompatible with kantan
 
@@ -18,13 +20,13 @@ object StockAnalysis extends App {
   def print( stockPrices: List[StockPrice] ) {
     println(this.getClass.getSimpleName)
     println(input_csv_filename)
-    println("\nstockPrices.take(5)\n",                 stockPrices.take(5))
-    // console.info("\nstockPrices.describe()\n",      stockPrices.describe())  // DOCS: https://stratodem.github.io/pandas.js-docs/#dataframe ???
-    println("\nthis.stats_90_day_close_price()\n",     stats_90_day_close_price(stockPrices))
-    println("\nthis.stats_vwap_by_month()\n",          stats_vwap_by_month(stockPrices))
-    println("\nthis.stats_average_price()\n",          stats_average_price(stockPrices))
-    println("\nthis.stats_profit_loss_percentage()\n", stats_profit_loss_percentage(stockPrices))
-    // println("\nthis.stats_quantity_trend()\n",      stats_quantity_trend(stockPrices))
+    println("\nstockPrices.take(5)");                 pprintln(stockPrices.take(5))
+
+    println("\nthis.stats_90_day_close_price()");     pprintln(stats_90_day_close_price(stockPrices))
+    println("\nthis.stats_vwap_by_month()");          pprintln(stats_vwap_by_month(stockPrices))
+    println("\nthis.stats_average_price()");          pprintln(stats_average_price(stockPrices))
+    println("\nthis.stats_profit_loss_percentage()"); pprintln(stats_profit_loss_percentage(stockPrices))
+    // println("\nthis.stats_quantity_trend()");      pprintln(stats_quantity_trend(stockPrices))
   }
 
 
