@@ -4,10 +4,10 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+import argonaut.Argonaut._
 import kantan.csv._
 import kantan.csv.java8.{localDateDecoder, localDateEncoder}
 import kantan.csv.ops._
-
 
 object StockPriceCSV {
   // NOTE: Input and Output CSV formats are different to match Python and Typescript implementation specs
@@ -68,7 +68,7 @@ object StockPriceCSV {
     list
   }
 
-  def write(output_csv_filename: String, data: List[StockPrice]): Unit = {
+  def write_csv(output_csv_filename: String, data: List[StockPrice]): Unit = {
     // DOCS: https://nrinaudo.github.io/kantan.csv/case_classes_as_rows.html
     // val csvText = data.asCsv(rfc.withHeader)
     val file = new File(output_csv_filename)
@@ -81,6 +81,12 @@ object StockPriceCSV {
         .close()
 
     println("Wrote: " + file.getAbsolutePath)
+  }
+
+  def write_json( output_json_filename: String, data: Map[String, Map[String, Double]] ): Unit = {
+    val json_string: String = data.asJson.spaces4
+    reflect.io.File(output_json_filename).writeAll(json_string)
+    println("Wrote: " + output_json_filename)
   }
 
   def print(input_csv_filename: String): Unit = {

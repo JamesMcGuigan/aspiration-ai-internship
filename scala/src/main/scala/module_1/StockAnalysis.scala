@@ -5,17 +5,20 @@ import java.time.LocalDate
 import pprint.pprintln
 
 import scala.Numeric._
+import scala.collection.immutable.{ListMap, Map}
 //import scala.util.chainingOps._  // Requires scala v2.13 - incompatible with kantan
 
 object StockAnalysis extends App {
-  val input_csv_filename:  String = if (args.length >= 1) args(0) else "../data/stocks/Mid_Cap/MUTHOOTFIN.csv"
-  val output_csv_filename: String = if (args.length >= 2) args(1) else "../data/output/week2-scala.csv"
+  val input_csv_filename:   String = if (args.length >= 1) args(0) else "../data/stocks/Mid_Cap/MUTHOOTFIN.csv"
+  val output_csv_filename:  String = if (args.length >= 2) args(1) else "../data/output/week2-scala.csv"
+  val output_json_filename: String = if (args.length >= 3) args(2) else "../data/output/week2-scala.json"
 
-  var data: List[StockPrice] = StockPriceCSV.read(input_csv_filename)
-  data = filter_not_eq(data)
+  var stockPrices: List[StockPrice] = StockPriceCSV.read(input_csv_filename)
 
-  StockAnalysis.print(data)
-  StockPriceCSV.write(output_csv_filename, data)
+  stockPrices = filter_not_eq(stockPrices)
+  StockAnalysis.print(stockPrices)
+  StockPriceCSV.write_csv(output_csv_filename,    stockPrices)
+  StockPriceCSV.write_json(output_json_filename, stats(stockPrices))
 
   def print( stockPrices: List[StockPrice] ) {
     println(this.getClass.getSimpleName)
@@ -25,7 +28,7 @@ object StockAnalysis extends App {
     pprintln( stats(stockPrices) )
   }
 
-  def stats( stockPrices: List[StockPrice] ) = {
+  def stats( stockPrices: List[StockPrice] ): Map[String, Map[String, Double]]  = {
     Map(
       "stats_90_day_close_price"     -> stats_90_day_close_price(stockPrices),
       "stats_vwap_by_month"          -> stats_vwap_by_month(stockPrices),
@@ -58,7 +61,7 @@ object StockAnalysis extends App {
 
   def stats_vwap_by_month( stockPrices: List[StockPrice] ): Map[String,Double] = {
     stockPrices
-      .groupBy(_.Date.getMonth.name)
+      .groupBy(stockPrice => s"${stockPrice.Date.getYear}-${stockPrice.Date.getMonthValue}")
       .mapValues(group => vwap(group))
   }
 
@@ -86,9 +89,9 @@ object StockAnalysis extends App {
 
   // 1.2 Calculate the maximum, minimum and mean price for the last 90 days. (price=Closing Price unless stated otherwise)
   def stats_90_day_close_price(stockPrices: List[StockPrice]): Map[String, Double] = {
-    val prices = filter_days(this.data, 90).map(_.Close_Price)
+    val prices = filter_days(this.stockPrices, 90).map(_.Close_Price)
 
-    Map(
+    ListMap(
       "min"  -> prices.min,
       "max"  -> prices.max,
       "mean" -> grizzled.math.stats.mean( prices.head, prices.tail:_* )
@@ -100,7 +103,7 @@ object StockAnalysis extends App {
     * last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
     */
   def stats_average_price( stockPrices: List[StockPrice] ): Map[String, Double] = {
-    Map(
+    ListMap(
       "1 week"   -> average_price(stockPrices, 7 * 1),
       "2 weeks"  -> average_price(stockPrices, 7 * 2),
       "1 month"  -> average_price(stockPrices, 365 / 12 * 1),
@@ -115,7 +118,7 @@ object StockAnalysis extends App {
     * last - 1 week, 2 weeks, 1 month, 3 months, 6 months and 1 year.
     */
   def stats_profit_loss_percentage(stockPrices: List[StockPrice] ): Map[String, Double] = {
-    Map(
+    ListMap(
       "1 week"   -> profit_loss_percentage(stockPrices, 7 * 1),
       "2 weeks"  -> profit_loss_percentage(stockPrices, 7 * 2),
       "1 month"  -> profit_loss_percentage(stockPrices, 365 / 12 * 1),
