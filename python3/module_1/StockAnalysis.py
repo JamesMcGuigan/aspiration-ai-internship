@@ -39,18 +39,31 @@ class StockAnalysis:
         print(self.filename)
         print('\nself.data.head()\n',                    self.data.head())
         print('\nself.data.describe()\n',                self.data.describe())
-        print('\nself.stats_90_day_close_price()\n',     self.stats_90_day_close_price())
-        print('\nself.stats_vwap()\n',                   self.stats_vwap_by_month())
-        print('\nself.stats_average_price()\n',          simplejson.dumps(self.stats_average_price(), indent=4*' '))
-        print('\nself.stats_profit_loss_percentage()\n', simplejson.dumps(self.stats_profit_loss_percentage(), indent=4*' '))
-        print('\nself.stats_quantity_trend()\n',         simplejson.dumps(self.stats_quantity_trend(), indent=4*' '))
+
+        print( simplejson.dumps(self.stats(), indent=4*' ') )
         return self  # for chaining
 
+    def stats(self):
+        return {
+            "stats_90_day_close_price":     self.stats_90_day_close_price(),
+            "stats_vwap_by_month":          self.stats_vwap_by_month(),
+            "stats_average_price":          self.stats_average_price(),
+            "stats_profit_loss_percentage": self.stats_profit_loss_percentage(),
+            "stats_quantity_trend":         self.stats_quantity_trend()
+        }
 
-    def write(self, output_csv_filename):
+
+    def write_csv(self, output_csv_filename: str):
         ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
         self.data.to_csv(output_csv_filename)
         print('Wrote: ', output_csv_filename)
+        return self  # for chaining
+
+    def write_stats(self, output_stats_filename: str):
+        ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
+        with open(output_stats_filename, "w") as stats_file:
+            stats_json = simplejson.dumps(self.stats(), indent=4*' ')
+            stats_file.write( stats_json )
         return self  # for chaining
 
     @staticmethod
@@ -124,7 +137,7 @@ class StockAnalysis:
         stats = { k: round(v,2) for k,v in stats.items() }  # round to 2dp
         return stats
 
-    def stats_vwap_by_month(self) -> pd.DataFrame:
+    def stats_vwap_by_month_df(self) -> pd.DataFrame:
         """
         1.4 Calculate the monthwise VWAP = sum(price*volume)/sum(volume)
         """
@@ -139,6 +152,17 @@ class StockAnalysis:
         vwap_df = pd.DataFrame(vwap).transpose().reindex(["Year", "Month", "VWAP"], axis=1)
         vwap_df[["Year", "Month"]] = vwap_df[["Year", "Month"]].apply(pd.to_numeric, downcast='integer')
         return vwap_df
+
+    def stats_vwap_by_month(self) -> dict:
+        """
+        1.4 Calculate the monthwise VWAP = sum(price*volume)/sum(volume)
+        """
+        vwap = {}
+        groupByMonth = self.data.groupby(['Date_Year', 'Date_Month'])
+        for key, group_df in groupByMonth:
+            month = str(key[0]) + "-" + str(key[1])
+            vwap[month] = self.vwap(group_df)
+        return vwap
 
 
     def stats_average_price(self) -> dict:
