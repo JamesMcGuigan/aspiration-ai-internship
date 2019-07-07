@@ -5,6 +5,8 @@
 .idea/tasks.xml
 .idea/uiDesigner.xml
 
+# Ignore nested github checkout
+aspiration-ai-internship/
 
 # Ignored file extensions
 *.wip.*
