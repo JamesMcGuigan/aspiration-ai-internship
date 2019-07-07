@@ -41,5 +41,15 @@
         "2 months": -0.30407257863515824,
         "6 months": 0.0,
         "1 year": 0.34015311907365836
+    },
+    "stats_quantity_trend": {
+        "Positive:mean": 20.0,
+        "Positive:median": 20.0,
+        "Slight:mean": 131.23076923076923,
+        "Slight:median": 51.0,
+        "Slight positive:mean": 130.0076923076923,
+        "Slight positive:median": 52.0,
+        "Slight negative:mean": 102.14285714285714,
+        "Slight negative:median": 100.0
     }
 }

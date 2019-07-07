@@ -5,7 +5,7 @@ import java.time.LocalDate
 import pprint.pprintln
 
 import scala.Numeric._
-import scala.collection.immutable.{ListMap, Map}
+import scala.collection.immutable.ListMap
 //import scala.util.chainingOps._  // Requires scala v2.13 - incompatible with kantan
 
 object StockAnalysis extends App {
@@ -16,6 +16,8 @@ object StockAnalysis extends App {
   var stockPrices: List[StockPrice] = StockPriceCSV.read(input_csv_filename)
 
   stockPrices = filter_not_eq(stockPrices)
+  stockPrices = setYesterdayStockPrices(stockPrices)
+
   StockAnalysis.print(stockPrices)
   StockPriceCSV.write_csv(output_csv_filename,    stockPrices)
   StockPriceCSV.write_json(output_json_filename, stats(stockPrices))
@@ -28,13 +30,13 @@ object StockAnalysis extends App {
     pprintln( stats(stockPrices) )
   }
 
-  def stats( stockPrices: List[StockPrice] ): Map[String, Map[String, Double]]  = {
-    Map(
+  def stats( stockPrices: List[StockPrice] ): ListMap[String, ListMap[String, Double]]  = {
+    ListMap(
       "stats_90_day_close_price"     -> stats_90_day_close_price(stockPrices),
       "stats_vwap_by_month"          -> stats_vwap_by_month(stockPrices),
       "stats_average_price"          -> stats_average_price(stockPrices),
       "stats_profit_loss_percentage" -> stats_profit_loss_percentage(stockPrices),
-      // "stats_quantity_trend"         -> stats_quantity_trend(stockPrices)
+      "stats_quantity_trend"         -> stats_quantity_trend(stockPrices)
     )
   }
 
@@ -51,6 +53,17 @@ object StockAnalysis extends App {
     val date_cutoff: LocalDate = date_end.minusDays(days)
 
     stockPrices.filter(_.Date.compareTo(date_cutoff) > 0)
+  }
+
+  def setYesterdayStockPrices( stockPrices: List[StockPrice] ): List[StockPrice] = {
+    for( (stockPrice, index) <- stockPrices.view.zipWithIndex ) {
+      val yesterdayStockPrice = index match {
+        case 0 => stockPrice
+        case _ => stockPrices(index-1)
+      }
+      stockPrice.setYesterday(yesterdayStockPrice)
+    }
+    stockPrices
   }
 
   def vwap( stockPrices: List[StockPrice] ): Double = {
@@ -130,20 +143,25 @@ object StockAnalysis extends App {
     )
   }
 
-//  // 1.8: Find the average and median values of the column 'Total Traded Quantity' for each of the types of 'Trend'.
-//  def stats_quantity_trend( stockPrices: List[StockPrice] ) {
-//    stockPrices
-//        .groupBy(_.Trend)
-//
-//    const trends = _(this.data)
-//      .groupBy('Trend')
-//    .toPairs().sortBy(0).fromPairs() // Sort by keys
-//      .mapValues((group) => _.map(group, 'Total_Traded_Quantity'))
-//    .mapValues((values) => ({
-//      "mean": ss.mean(values),
-//      "median": ss.median(values),
-//    }))
-//      .value();
-//    return trends;
-//  }
+  // 1.8: Find the average and median values of the column 'Total Traded Quantity' for each of the types of 'Trend'.
+  def stats_quantity_trend( stockPrices: List[StockPrice] ): ListMap[String, Double] = {
+    val groups = stockPrices
+      .groupBy(_.Trend)
+      .mapValues(group =>
+        group.map(_.Total_Traded_Quantity)
+      )
+      //// TODO: stats() + print_json() break with type: Map[String, Map[String, Either[Double, Map[String, Double]]]]
+      //.mapValues(values => ListMap(
+      //  "mean"   ->
+      //    "median" -> grizzled.math.stats.median( values.head, values.tail:_* )
+      //))
+
+    //// Cast to: Map[String, Double]
+    var quantity_trend: ListMap[String, Double] = ListMap()
+    for( (key, values) <- groups ) {
+      quantity_trend = quantity_trend + ( s"$key:mean"   -> grizzled.math.stats.mean(   values.head, values.tail:_* ) )
+      quantity_trend = quantity_trend + ( s"$key:median" -> grizzled.math.stats.median( values.head, values.tail:_* ) )
+    }
+    quantity_trend
+  }
 }

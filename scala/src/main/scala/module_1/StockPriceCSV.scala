@@ -10,6 +10,8 @@ import kantan.csv._
 import kantan.csv.java8.{localDateDecoder, localDateEncoder}
 import kantan.csv.ops._
 
+import scala.collection.immutable.Map
+
 object StockPriceCSV {
   // NOTE: Input and Output CSV formats are different to match Python and Typescript implementation specs
 
@@ -106,6 +108,7 @@ object StockPriceCSV {
   )
   
   def write_json( output_json_filename: String, data: Map[String, Map[String, Double]] ): Unit = {
+    // TODO: figure out how to get encode nested types: Map[String, Map[String, Either[Double, Map[String, Double]]]]
     val json_string: String = data.asJson.pretty( jsonPrettyParams )
 
     reflect.io.File(output_json_filename).writeAll(json_string)
