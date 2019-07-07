@@ -48,15 +48,15 @@
             "median": 20
         },
         "Slight": {
-            "mean": 131.23076923076923,
+            "mean": 131.23,
             "median": 51
         },
         "Slight negative": {
-            "mean": 102.14285714285714,
+            "mean": 102.14,
             "median": 100
         },
         "Slight positive": {
-            "mean": 130.0076923076923,
+            "mean": 130.01,
             "median": 52
         }
     }

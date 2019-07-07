@@ -122,7 +122,8 @@ class StockAnalysis {
     }
 
     write_stats(output_stats_filename: string): StockAnalysis {
-        let json_string = JSON.stringify(this.stats(2), null, 4);
+        let stats = this.stats(2);
+        let json_string = JSON.stringify(stats, null, 4);
         fs.writeFileSync(output_stats_filename, json_string);
         console.info(`Wrote: ${output_stats_filename}`);
         return this
@@ -146,13 +147,25 @@ class StockAnalysis {
             "stats_profit_loss_percentage": this.stats_profit_loss_percentage(),
             "stats_quantity_trend":         this.stats_quantity_trend()
         };
-        if( roundDp === Infinity ) { return stats; }
-        return _.mapValues(stats, (map) => _.mapValues(map, (value, key) => {
-            if( typeof value === "number" ) { try {
-                return Number(Number(value).toFixed(roundDp))
-            } catch(exception) {} }  // RangeError: toFixed() digits argument must be between 0 and 100
-            return value;
-        }));
+        return this.round(stats, roundDp);
+    }
+
+    // TODO: Figure out how to get generic types working for passthrough return type
+    round( data: any, roundDp: number ) {
+        if( roundDp == Infinity ) { return data; }
+        roundDp = Math.min(Math.max(roundDp, 0), 100);  // RangeError: toFixed() digits argument must be between 0 and 100
+
+        if( typeof data === "number" ) { try {
+            return Number(Number(data).toFixed(roundDp))
+        } catch(exception) {} }
+
+        else if( data instanceof Array ) {
+            return _.map(data, (value) => this.round(value, roundDp))
+        }
+        else if( data instanceof Object ) {
+            return _.mapValues(data, (value) => this.round(value, roundDp))
+        }
+        return data;
     }
 
     /**
