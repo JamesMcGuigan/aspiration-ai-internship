@@ -65,11 +65,13 @@ for OS in UNIX WINDOWS; do
     if [[ $OS == 'UNIX' ]]; then
         $PIP install --upgrade pip pip-tools
         pip-compile
+        $PIP install -r ./requirements.txt
         pip-sync
     fi;
     if [[ $OS == 'WINDOWS' ]]; then
         python -m pip install --upgrade pip pip-tools
         pip-compile.exe
+        python -m pip install -r ./requirements.txt
         pip-sync.exe
     fi;
 done

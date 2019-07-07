@@ -15,9 +15,10 @@ pip-review
 pip-tools
 
 # Test Dependencies
-nose
-pytest
 typing
+nose
+pytest==4.6.4
+
 
 # Code Dependencies
 numpy
