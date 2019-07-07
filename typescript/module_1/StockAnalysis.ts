@@ -122,7 +122,7 @@ class StockAnalysis {
     }
 
     write_stats(output_stats_filename: string): StockAnalysis {
-        let json_string = JSON.stringify(this.stats(), null, 4);
+        let json_string = JSON.stringify(this.stats(2), null, 4);
         fs.writeFileSync(output_stats_filename, json_string);
         console.info(`Wrote: ${output_stats_filename}`);
         return this
@@ -134,18 +134,25 @@ class StockAnalysis {
         console.info('\nthis.data.head()\n',        _(this.data).take(1).value());
         // console.info('\nthis.data.describe()\n', this.data.describe())  // DOCS: https://stratodem.github.io/pandas.js-docs/#dataframe ???
 
-        console.info( JSON.stringify(this.stats(), null, 4) );
+        console.info( JSON.stringify(this.stats(2), null, 4) );
         return this  // for chaining
     }
 
-    stats() {
-        return {
+    stats( roundDp: number = Infinity ) {
+        let stats = {
             "stats_90_day_close_price":     this.stats_90_day_close_price(),
             "stats_vwap_by_month":          this.stats_vwap_by_month(),
             "stats_average_price":          this.stats_average_price(),
             "stats_profit_loss_percentage": this.stats_profit_loss_percentage(),
             "stats_quantity_trend":         this.stats_quantity_trend()
-        }
+        };
+        if( roundDp === Infinity ) { return stats; }
+        return _.mapValues(stats, (map) => _.mapValues(map, (value, key) => {
+            if( typeof value === "number" ) { try {
+                return Number(Number(value).toFixed(roundDp))
+            } catch(exception) {} }  // RangeError: toFixed() digits argument must be between 0 and 100
+            return value;
+        }));
     }
 
     /**
