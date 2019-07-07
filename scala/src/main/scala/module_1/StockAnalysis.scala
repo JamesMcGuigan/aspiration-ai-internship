@@ -86,7 +86,7 @@ object StockAnalysis extends App {
 
     prices.length match {
       case 0 => 0
-      case 1 => 0
+      case 1 => prices.head
       case _ => grizzled.math.stats.mean( prices.head, prices.tail:_* )  // Weird syntax: https://github.com/bmc/grizzled-scala/blob/master/src/test/scala/grizzled/math/StatsSpec.scala
     }
   }
