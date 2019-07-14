@@ -1,0 +1,4 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percent_Dly_Qt_to_Traded_Qty,Date_Year,Date_Month,Day_Perc_Change,Trend
+NCC,BL,2017-06-14,74.50,91,91,91,91,91,91,2750000,250250000,1,2750000,100,2017,6,0,Slight
+NCC,BL,2017-08-28,91,86.10,86.10,86.10,86.10,86.10,86.10,1187000,102200700,1,1187000,100,2017,8,-0.05,Slight
+NCC,BL,2017-09-29,86.10,82.50,82.75,82.50,82.75,82.60,82.60,5000000,413000000,2,5000000,100,2017,9,-0.04,Slight

@@ -1,0 +1,4 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percent_Dly_Qt_to_Traded_Qty,Date_Year,Date_Month,Day_Perc_Change,Trend
+IGL,IL,2017-07-18,1060,1160,1160,1160,-,1160,1160,500000,580000000,15,500000,100,2017,7,0,Slight
+IGL,IL,2017-07-25,1160,1195.75,1195.75,1195.75,-,1195.75,1195.75,55000,65766250,1,55000,100,2017,7,0.03,Slight
+IGL,IL,2017-07-26,1195.75,1197,1197,1189,-,1189,1193.74,42214,50392446,2,25000,59.22,2017,7,-0.01,Slight

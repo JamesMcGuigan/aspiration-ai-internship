@@ -1,0 +1,32 @@
+{
+  "stats_90_day_close_price": {
+    "min": 169,
+    "max": 169,
+    "mean": 169
+  },
+  "stats_vwap_by_month": {
+    "2017-6": 169
+  },
+  "stats_average_price": {
+    "1 week": 169,
+    "2 weeks": 169,
+    "1 month": 169,
+    "2 months": 169,
+    "6 months": 169,
+    "1 year": 169
+  },
+  "stats_profit_loss_percentage": {
+    "1 week": 0,
+    "2 weeks": 0,
+    "1 month": 0,
+    "2 months": 0,
+    "6 months": 0,
+    "1 year": 0
+  },
+  "stats_quantity_trend": {
+    "Slight": {
+      "mean": 3188905,
+      "median": 3188905
+    }
+  }
+}

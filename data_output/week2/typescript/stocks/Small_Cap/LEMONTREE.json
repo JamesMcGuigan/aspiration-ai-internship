@@ -1,0 +1,25 @@
+{
+  "stats_90_day_close_price": {
+    "min": null,
+    "max": null,
+    "mean": null
+  },
+  "stats_vwap_by_month": {},
+  "stats_average_price": {
+    "1 week": null,
+    "2 weeks": null,
+    "1 month": null,
+    "2 months": null,
+    "6 months": null,
+    "1 year": null
+  },
+  "stats_profit_loss_percentage": {
+    "1 week": 0,
+    "2 weeks": 0,
+    "1 month": 0,
+    "2 months": 0,
+    "6 months": 0,
+    "1 year": 0
+  },
+  "stats_quantity_trend": {}
+}

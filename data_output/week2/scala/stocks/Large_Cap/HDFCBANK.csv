@@ -1,0 +1,2 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+HDFCBANK,BL,2018-08-21,470.0,2096.2,2096.2,2096.2,2096.2,2096.2,2096.2,120298,2.521686676E8,1,120298,100.0,2018,8,0.0,Slight

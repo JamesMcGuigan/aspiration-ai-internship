@@ -1,0 +1,3 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+DRREDDY,BL,2019-02-18,1460.0,2563.35,2563.35,2563.35,2563.35,2563.35,2563.35,570529,1.46246551215E9,1,0,0.0,2019,2,0.0,Slight
+DRREDDY,BL,2019-02-25,2563.35,2639.5,2639.5,2639.5,2639.5,2639.5,2639.5,586236,1.547369922E9,2,0,0.0,2019,2,0.02970721906879673,Slight

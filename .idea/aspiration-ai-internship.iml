@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <output-test url="test" />
+    <output-test url="file://test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.ts" />
@@ -9,7 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludePattern pattern="elm-stuff" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (aspiration-ai-internship)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="scala-sdk-2.13.0" level="application" />
   </component>

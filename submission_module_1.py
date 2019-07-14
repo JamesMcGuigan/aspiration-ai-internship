@@ -28,11 +28,11 @@ shell_commands = [
     """
     cd aspiration-ai-internship/scala/;
     sbt compile;
-    sbt 'runMain module_1.StockAnalysis';
+    sbt 'runMain module_1.Main';
     """,
     
     """
-    cd aspiration-ai-internship/data/output/
+    cd aspiration-ai-internship/data_output/week2/
     ls -lah;
     tail -n +1 *
     """,

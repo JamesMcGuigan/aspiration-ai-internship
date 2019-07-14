@@ -1,0 +1,2 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+IDFC,BL,2017-11-07,84.0,62.5,62.5,62.5,62.5,62.5,62.5,4000000,2.5E8,3,4000000,100.0,2017,11,0.0,Slight

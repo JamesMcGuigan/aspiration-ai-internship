@@ -1,0 +1,33 @@
+{
+    "stats_90_day_close_price": {
+        "min": 1102.55,
+        "max": 1102.55,
+        "mean": 1102.55
+    },
+    "stats_vwap_by_month": {
+        "2018-1": 918.0,
+        "2019-3": 1102.55
+    },
+    "stats_average_price": {
+        "1 week": 1102.55,
+        "2 weeks": 1102.55,
+        "1 month": 1102.55,
+        "2 months": 1102.55,
+        "6 months": 1102.55,
+        "1 year": 1102.55
+    },
+    "stats_profit_loss_percentage": {
+        "1 week": 0.0,
+        "2 weeks": 0.0,
+        "1 month": 0.0,
+        "2 months": 0.0,
+        "6 months": 0.0,
+        "1 year": 0.0
+    },
+    "stats_quantity_trend": {
+        "Slight": {
+            "mean": 198202.0,
+            "median": 198202.0
+        }
+    }
+}

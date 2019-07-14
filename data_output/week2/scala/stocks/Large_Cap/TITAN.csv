@@ -1,0 +1,3 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+TITAN,BL,2018-01-11,829.0,918.0,918.0,918.0,918.0,918.0,918.0,250000,2.295E8,1,250000,100.0,2018,1,0.0,Slight
+TITAN,BL,2019-03-25,918.0,1102.55,1102.55,1102.55,1102.55,1102.55,1102.55,146404,1.614177302E8,1,146404,100.0,2019,3,0.20103485838779953,Slight

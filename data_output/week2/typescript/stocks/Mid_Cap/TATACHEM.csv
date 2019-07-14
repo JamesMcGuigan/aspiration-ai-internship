@@ -1,0 +1,5 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percent_Dly_Qt_to_Traded_Qty,Date_Year,Date_Month,Day_Perc_Change,Trend
+TATACHEM,IL,2017-06-07,645,645,645,644.95,-,645,644.99,1815,1170657.55,12,1815,100,2017,6,0,Slight
+TATACHEM,IL,2017-07-17,645,632.60,632.60,632.60,-,632.60,632.60,30000,18978000,1,30000,100,2017,7,-0.02,Slight
+TATACHEM,IL,2018-02-14,632.60,733,733,733,-,733,733,1074500,787608500,9,1074500,100,2018,2,0.16,Slight
+TATACHEM,IL,2018-02-19,733,726,726,726,-,726,726,23500,17061000,1,23500,100,2018,2,-0.01,Slight

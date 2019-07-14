@@ -71,9 +71,24 @@ object StockPriceCSV {
     list
   }
 
+  def create_directory_for_filename(filename: String): Boolean = {
+    var results: List[Boolean] = List()
+    val filenameParts = filename.split(File.separator).filter(!_.isEmpty)
+    for (i <- 1 until filenameParts.length) { // until = exclude filename
+      val path = filenameParts.slice(0, i).mkString(File.separator)
+      val file = new File(path)
+      if (!file.exists) {
+        results = file.mkdirs() :: results
+      }
+    }
+    results.contains(true)
+  }
+
   def write_csv(output_csv_filename: String, data: List[StockPrice]): Unit = {
     // DOCS: https://nrinaudo.github.io/kantan.csv/case_classes_as_rows.html
     // val csvText = data.asCsv(rfc.withHeader)
+    create_directory_for_filename(output_csv_filename)
+
     val file = new File(output_csv_filename)
     file.createNewFile()
 
@@ -106,10 +121,11 @@ object StockPriceCSV {
     preserveOrder = true,
     dropNullKeys = false,
   )
-  
+
   def write_json( output_json_filename: String, data: Map[String, Map[String, Double]] ): Unit = {
     // TODO: figure out how to get encode nested types: Map[String, Map[String, Either[Double, Map[String, Double]]]]
     val json_string: String = data.asJson.pretty( jsonPrettyParams )
+    create_directory_for_filename(output_json_filename)
 
     reflect.io.File(output_json_filename).writeAll(json_string)
     println("Wrote: " + output_json_filename)

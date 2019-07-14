@@ -1,0 +1,3 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+MARUTI,BL,2018-08-21,1066.0,9074.35,9074.35,9074.35,9074.35,9074.35,9074.35,147408,1.3376317848E9,1,147408,100.0,2018,8,0.0,Slight
+MARUTI,BL,2019-03-22,9074.35,6673.55,6673.55,6673.55,6673.55,6673.55,6673.55,52597,3.5100870935E8,1,52597,100.0,2019,3,-0.2645699140985305,Slight

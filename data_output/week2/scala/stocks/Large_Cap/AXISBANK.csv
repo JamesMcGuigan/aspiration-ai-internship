@@ -1,0 +1,2 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+AXISBANK,BL,2019-03-22,571.25,755.75,755.75,755.75,755.75,755.75,755.75,766627,5.7937835525E8,1,766627,100.0,2019,3,0.0,Slight

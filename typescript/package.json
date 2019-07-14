@@ -7,19 +7,23 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "clean":          "find ./module_*/ -name '*.js' -or -name '*.map' -print -delete",
-    "build":          "yarn clean; ./node_modules/.bin/tsc",
-    "watch":          "yarn clean; ./node_modules/.bin/tsc -w",
-    "start":          "yarn start:module1",
+    "clean": "find ./module_*/ -name '*.js' -or -name '*.map' -print -delete",
+    "build": "yarn clean; ./node_modules/.bin/tsc",
+    "watch": "yarn clean; ./node_modules/.bin/tsc -w",
+    "start": "yarn start:module_1",
     "start:module_1": "yarn build; node --experimental-modules --es-module-specifier-resolution=node module_1/index.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.5",
     "csv": "^5.1.1",
     "datejs": "^1.0.0-rc3",
+    "fs-jetpack": "^2.2.2",
+    "glob": "^7.1.4",
     "lodash": "^4.17.11",
     "simple-statistics": "^7.0.2"
   },
   "devDependencies": {
+    "@types/bluebird-global": "^3.5.12",
     "@types/lodash": "^4.14.134",
     "@types/node": "^12.0.10",
     "ts-node": "^8.3.0",

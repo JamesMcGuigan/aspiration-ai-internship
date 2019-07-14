@@ -1,4 +1,5 @@
 import math
+import os
 import re
 
 import pandas as pd
@@ -52,15 +53,21 @@ class StockAnalysis:
             "stats_quantity_trend":         self.stats_quantity_trend()
         }
 
+    def ensure_directory(self, filename):
+        dirname = os.path.dirname(filename)
+        if( not os.path.isdir(dirname) ):
+            os.makedirs(dirname)  # ensure directory exists
 
     def write_csv(self, output_csv_filename: str):
         ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
+        self.ensure_directory(output_csv_filename)
         self.data.to_csv(output_csv_filename)
         print('Wrote: ', output_csv_filename)
         return self  # for chaining
 
     def write_stats(self, output_stats_filename: str):
         ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
+        self.ensure_directory(output_stats_filename)
         with open(output_stats_filename, "w") as stats_file:
             stats_json = simplejson.dumps(self.stats(), indent=4*' ')
             stats_file.write( stats_json )
@@ -97,9 +104,13 @@ class StockAnalysis:
         """ 1.5 Write a second function to calculate the profit/loss percentage over the last N days. """
         df_days     = StockAnalysis.filter_days(df, days)
         close_price = df_days.Close_Price.values
-        profit      = (close_price[-1] - close_price[0]) / close_price[-1]
-        profit_pc   = profit * 100  # QUESTION: Should this return as 0.x fractional percentage or 0-100%
-        return round(profit_pc, 2)  # return as percentage
+
+        if len(close_price) == 0:
+            return 0  # BUGFIX: IndexError: index -1 is out of bounds for axis 0 with size 0
+        else:
+            profit      = (close_price[-1] - close_price[0]) / close_price[-1]
+            profit_pc   = profit * 100  # QUESTION: Should this return as 0.x fractional percentage or 0-100%
+            return round(profit_pc, 2)  # return as percentage
 
     @staticmethod
     def trend( day_perc_change: float ) -> str:

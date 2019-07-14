@@ -2,6 +2,7 @@ import _ from 'lodash';
 import csv from '../node_modules/csv/lib/sync.js';
 import fs from 'fs';
 import ss from '../node_modules/simple-statistics/dist/simple-statistics.js';
+import jetpack from "../node_modules/fs-jetpack/main.js";
 import 'datejs';
 // import moment, { Moment } from '../../../node_modules/moment/moment';
 // moment['suppressDeprecationWarnings'] = true;  // BUGFIX: TS2339: Property 'suppressDeprecationWarnings' does not exist on type 'typeof moment'.
@@ -70,6 +71,7 @@ class StockAnalysis {
 
     _filter_days( data: Array<Object>, days?: Number ): Array<Object> {
         if( days === undefined ) { return data; }
+        if( _.size(data) === 0 ) { return data; }
 
         let date_end    = _(data).map("Date").max();
         let date_cutoff = date_end.clone().add(-days).days();  // DateJS/Moment operations modify existing variable
@@ -116,15 +118,15 @@ class StockAnalysis {
                 // },
             }
         });
-        fs.writeFileSync(output_csv_filename, csv_string);
+        jetpack.write( output_csv_filename, csv_string);
         console.info(`Wrote: ${output_csv_filename}`);
         return this;
     }
 
     write_stats(output_stats_filename: string): StockAnalysis {
         let stats = this.stats(2);
-        let json_string = JSON.stringify(stats, null, 4);
-        fs.writeFileSync(output_stats_filename, json_string);
+        // let json_string = JSON.stringify(stats, null, 4);
+        jetpack.write( output_stats_filename, stats );
         console.info(`Wrote: ${output_stats_filename}`);
         return this
     }

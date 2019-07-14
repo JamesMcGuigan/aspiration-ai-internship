@@ -1,0 +1,3 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+INFY,BL,2019-02-25,1220.15,734.95,734.95,734.95,734.95,734.95,734.95,1263230,9.284108885E8,1,0,0.0,2019,2,0.0,Slight
+INFY,BL,2019-03-22,734.95,738.95,738.95,738.95,738.95,738.95,738.95,1727935,1.27685756825E9,1,1727935,100.0,2019,3,0.005442547112048438,Slight

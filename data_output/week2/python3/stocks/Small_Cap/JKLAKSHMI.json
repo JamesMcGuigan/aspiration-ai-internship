@@ -1,0 +1,25 @@
+{
+    "stats_90_day_close_price": {
+        "min": NaN,
+        "max": NaN,
+        "mean": NaN
+    },
+    "stats_vwap_by_month": {},
+    "stats_average_price": {
+        "1 week": NaN,
+        "2 weeks": NaN,
+        "1 month": NaN,
+        "2 months": NaN,
+        "6 months": NaN,
+        "1 year": NaN
+    },
+    "stats_profit_loss_percentage": {
+        "1 week": 0,
+        "2 weeks": 0,
+        "1 month": 0,
+        "2 months": 0,
+        "6 months": 0,
+        "1 year": 0
+    },
+    "stats_quantity_trend": {}
+}

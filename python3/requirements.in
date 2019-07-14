@@ -18,7 +18,7 @@ pip-tools
 typing
 nose
 pytest==4.6.4
-
+glob2
 
 # Code Dependencies
 numpy

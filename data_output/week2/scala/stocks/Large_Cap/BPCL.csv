@@ -1,0 +1,2 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percentage_Dly_Qt_to_Traded_Qty,Year,Month,Day_Perc_Change,Trend
+BPCL,BL,2019-03-22,435.05,389.15,389.15,389.15,389.15,389.15,389.15,781036,3.039401594E8,1,781036,100.0,2019,3,0.0,Slight

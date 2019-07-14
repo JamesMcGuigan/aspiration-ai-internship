@@ -9,9 +9,9 @@ import scala.collection.immutable.ListMap
 //import scala.util.chainingOps._  // Requires scala v2.13 - incompatible with kantan
 
 object StockAnalysis extends App {
-  val input_csv_filename:   String = if (args.length >= 1) args(0) else "../data/stocks/Mid_Cap/MUTHOOTFIN.csv"
-  val output_csv_filename:  String = if (args.length >= 2) args(1) else "../data/output/week2-scala.csv"
-  val output_json_filename: String = if (args.length >= 3) args(2) else "../data/output/week2-scala.json"
+  val input_csv_filename:   String  = if (args.length >= 1) args(0) else "../data/stocks/Mid_Cap/MUTHOOTFIN.csv"
+  val output_csv_filename:  String  = if (args.length >= 2) args(1) else "../data/output/week2-scala.csv"
+  val output_json_filename: String  = if (args.length >= 3) args(2) else "../data/output/week2-scala.json"
 
   var stockPrices: List[StockPrice] = StockPriceCSV.read(input_csv_filename)
 
@@ -25,7 +25,7 @@ object StockAnalysis extends App {
   def print( stockPrices: List[StockPrice] ) {
     println(this.getClass.getSimpleName)
     println(input_csv_filename)
-    println("\nstockPrices.take(5)");                 pprintln(stockPrices.take(5))
+    println("\nstockPrices.take(5)");  pprintln(stockPrices.take(5))
 
     pprintln( stats(stockPrices) )
   }
@@ -49,10 +49,14 @@ object StockAnalysis extends App {
     // DOCS: https://stackoverflow.com/questions/38059191/how-make-implicit-ordered-on-java-time-localdate
     implicit val localDateOrdering: Ordering[LocalDate] = _ compareTo _
 
-    val date_end:    LocalDate = stockPrices.map(_.Date).max
-    val date_cutoff: LocalDate = date_end.minusDays(days)
+    stockPrices.length match {
+      case 0 => stockPrices
+      case _ =>
+        val date_end:    LocalDate = stockPrices.map(_.Date).max
+        val date_cutoff: LocalDate = date_end.minusDays(days)
 
-    stockPrices.filter(_.Date.compareTo(date_cutoff) > 0)
+        stockPrices.filter(_.Date.compareTo(date_cutoff) > 0)
+    }
   }
 
   def setYesterdayStockPrices( stockPrices: List[StockPrice] ): List[StockPrice] = {
@@ -106,11 +110,18 @@ object StockAnalysis extends App {
   def stats_90_day_close_price(stockPrices: List[StockPrice]): ListMap[String, Double] = {
     val prices = filter_days(this.stockPrices, 90).map(_.Close_Price)
 
-    ListMap(
-      "min"  -> prices.min,
-      "max"  -> prices.max,
-      "mean" -> grizzled.math.stats.mean( prices.head, prices.tail:_* )
-    )
+    prices.length match {
+      case 0 => ListMap(
+        "min"  -> 0,
+        "max"  -> 0,
+        "mean" -> 0
+      )
+      case _ => ListMap(
+        "min"  -> prices.min,
+        "max"  -> prices.max,
+        "mean" -> grizzled.math.stats.mean(prices.head, prices.tail: _*)
+      )
+    }
   }
 
   /**

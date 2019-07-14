@@ -1,0 +1,35 @@
+{
+  "stats_90_day_close_price": {
+    "min": 82.35,
+    "max": 279.35,
+    "mean": 204.8
+  },
+  "stats_vwap_by_month": {
+    "2018-7": 222.04,
+    "2018-8": 263.56,
+    "2018-9": 247.26,
+    "2018-10": 115.3
+  },
+  "stats_average_price": {
+    "1 week": 88.53,
+    "2 weeks": 97.74,
+    "1 month": 115.05,
+    "2 months": 176.91,
+    "6 months": 209.67,
+    "1 year": 209.67
+  },
+  "stats_profit_loss_percentage": {
+    "1 week": -9.95,
+    "2 weeks": -26.58,
+    "1 month": -45.77,
+    "2 months": -67.74,
+    "6 months": -59.1,
+    "1 year": -59.1
+  },
+  "stats_quantity_trend": {
+    "Slight": {
+      "mean": 480116.79,
+      "median": 271716.5
+    }
+  }
+}

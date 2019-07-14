@@ -1,0 +1,3 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percent_Dly_Qt_to_Traded_Qty,Date_Year,Date_Month,Day_Perc_Change,Trend
+ITC,BL,2018-08-21,275.85,313.30,313.30,313.30,313.30,313.30,313.30,7217711,2261308856.30,1,7217711,100,2018,8,0,Slight
+ITC,BL,2019-03-22,313.30,298.90,298.90,298.90,298.90,298.90,298.90,693294,207225576.60,1,693294,100,2019,3,-0.05,Slight

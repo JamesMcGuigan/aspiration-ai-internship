@@ -1,0 +1,4 @@
+Symbol,Series,Date,Prev_Close,Open_Price,High_Price,Low_Price,Last_Price,Close_Price,Average_Price,Total_Traded_Quantity,Turnover,No_of_Trades,Deliverable_Qty,Percent_Dly_Qt_to_Traded_Qty,Date_Year,Date_Month,Day_Perc_Change,Trend
+M&amp;M,BL,2019-02-18,792,627.55,627.55,627.55,627.55,627.55,627.55,5358108,3362480675.40,1,0,0,2019,2,0,Slight
+M&amp;M,BL,2019-02-25,627.55,646.60,646.60,646.60,646.60,646.60,646.60,377124,243848378.40,1,0,0,2019,2,0.03,Slight
+M&amp;M,BL,2019-03-25,646.60,678.80,678.80,678.80,678.80,678.80,678.80,222927,151322847.60,1,222927,100,2019,3,0.05,Slight
