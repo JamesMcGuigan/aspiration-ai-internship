@@ -32,7 +32,7 @@ shell_commands = [
     """,
     
     """
-    cd aspiration-ai-internship/data_output/week2/
+    cd aspiration-ai-internship/data_output/module_1/
     ls -lah;
     tail -n +1 *
     """,

@@ -10,12 +10,12 @@ def main():
     # Output single file as original specs
     StockAnalysis('../data/stocks/Mid_Cap/MUTHOOTFIN.csv') \
         .print() \
-        .write_csv(   '../data_output/week2/week2-python.csv'  ) \
-        .write_stats( '../data_output/week2/week2-python.json' )
+        .write_csv(   '../data_output/module_1/week2-python.csv'  ) \
+        .write_stats( '../data_output/module_1/week2-python.json' )
 
     # Output directory tree of all stocks
     for input_csv in glob2.iglob('../data/stocks/**/*.csv'):
-        output_csv  = re.sub( '\.\./data/', '../data_output/week2/python3/', input_csv )
+        output_csv  = re.sub( '\.\./data/', '../data_output/module_1/python3/', input_csv )
         output_json = re.sub( '\.csv', '.json', output_csv )
 
         StockAnalysis(input_csv) \
