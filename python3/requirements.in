@@ -20,8 +20,12 @@ nose
 pytest==4.6.4
 glob2
 
+
 # Code Dependencies
+jupyterlab
 numpy
 pandas
 simplejson
+seaborn
+
 
