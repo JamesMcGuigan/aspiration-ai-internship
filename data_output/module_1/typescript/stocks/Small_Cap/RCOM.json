@@ -1,25 +1,60 @@
 {
   "stats_90_day_close_price": {
-    "min": null,
-    "max": null,
-    "mean": null
+    "min": 1.85,
+    "max": 6.65,
+    "mean": 4.13
   },
-  "stats_vwap_by_month": {},
+  "stats_vwap_by_month": {
+    "2017-5": 22.11,
+    "2017-6": 20.07,
+    "2017-7": 24,
+    "2017-8": 23.24,
+    "2017-9": 20.7,
+    "2017-10": 16.87,
+    "2017-11": 13.04,
+    "2017-12": 24.61,
+    "2018-1": 31.9,
+    "2018-2": 27.68,
+    "2018-3": 24.29,
+    "2018-4": 21.13,
+    "2018-5": 15.37,
+    "2018-6": 15.32,
+    "2018-7": 13.43,
+    "2018-8": 18.53,
+    "2018-9": 15.15,
+    "2018-10": 11.37,
+    "2018-11": 13.83,
+    "2018-12": 15.61,
+    "2019-1": 13.37,
+    "2019-2": 6.16,
+    "2019-3": 5.07,
+    "2019-4": 3.1,
+    "2019-5": 2.16
+  },
   "stats_average_price": {
-    "1 week": null,
-    "2 weeks": null,
-    "1 month": null,
-    "2 months": null,
-    "6 months": null,
-    "1 year": null
+    "1 week": 2.26,
+    "2 weeks": 2.11,
+    "1 month": 2.18,
+    "2 months": 3.16,
+    "6 months": 8.87,
+    "1 year": 11.75
   },
   "stats_profit_loss_percentage": {
-    "1 week": 0,
-    "2 weeks": 0,
-    "1 month": 0,
-    "2 months": 0,
-    "6 months": 0,
-    "1 year": 0
+    "1 week": 9.52,
+    "2 weeks": 24.32,
+    "1 month": -11.54,
+    "2 months": -50.54,
+    "6 months": -83.39,
+    "1 year": -82.96
   },
-  "stats_quantity_trend": {}
+  "stats_quantity_trend": {
+    "Slight": {
+      "mean": 80851214.9,
+      "median": 56941722
+    },
+    "Slight positive": {
+      "mean": 556849068,
+      "median": 556849068
+    }
+  }
 }

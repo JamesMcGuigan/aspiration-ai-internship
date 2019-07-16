@@ -64,7 +64,7 @@ class StockAnalysis {
     _filter_csv( data: Array<Object> ): Array<Object> {
         // 1.1 remove all the rows where 'Series' column is NOT 'EQ'
         return _(data)
-            .filter((row) => row['Series'] !== "EQ")
+            .filter((row) => row['Series'] === "EQ")
             .value()
         ;
     }

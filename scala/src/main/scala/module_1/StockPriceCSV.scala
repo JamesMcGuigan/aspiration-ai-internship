@@ -74,8 +74,9 @@ object StockPriceCSV {
   def create_directory_for_filename(filename: String): Boolean = {
     var results: List[Boolean] = List()
     val filenameParts = filename.split(File.separator)
-    println(filename, filenameParts.length.toString, filenameParts)
-    for ( i <- 1 to filenameParts.length - 1 ) {  // -1 = exclude filename
+
+    //noinspection ReplaceToWithUntil
+    for (i <- 1 to filenameParts.length - 1 ) {  // -1 = exclude filename
       val path = filenameParts.slice(0, i).mkString(File.separator)
       val file = new File(path)
       if ( !path.isBlank && !file.exists ) {

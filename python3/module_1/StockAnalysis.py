@@ -14,7 +14,7 @@ class StockAnalysis:
         self.filename = input_csv_filename
         self.data = pd.read_csv(self.filename, parse_dates=['Date'] )        # parse_dates=['Date'] cast to Timestamp
         self.data = self.data.rename(lambda x: re.sub(r'%', 'Percent', x).replace('.', '').replace(' ', '_'), axis=1)  # Rename columns without spaces
-        self.data = self.filter_not_eq(self.data)
+        self.data = self.filter_EQ(self.data)
 
         ### 1.3: Change the date column from 'object' type to 'datetime64(ns)' | WORKAROUND: cast to pd.Timestamp instead
         # self.data['Date'] = pd.to_datetime(self.data['Date'])              # Cast to Timestamp without parse_dates=["Date"]
@@ -74,9 +74,9 @@ class StockAnalysis:
         return self  # for chaining
 
     @staticmethod
-    def filter_not_eq( data: pd.DataFrame ) -> pd.DataFrame:
+    def filter_EQ(data: pd.DataFrame) -> pd.DataFrame:
         """  1.1 remove all the rows where 'Series' column is NOT 'EQ' """
-        return data[data.Series != 'EQ']
+        return data[data.Series == 'EQ']
 
     @staticmethod
     def filter_days(df: pd.DataFrame, days=None) -> pd.DataFrame:

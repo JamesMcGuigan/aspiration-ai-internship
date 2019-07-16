@@ -42,7 +42,7 @@ object StockAnalysis extends App {
 
 
   def filter_not_eq( stockPrices: List[StockPrice]): List[StockPrice] = {
-    stockPrices.filter( _.Series != "EQ" )
+    stockPrices.filter( _.Series == "EQ" )
   }
 
   def filter_days( stockPrices: List[StockPrice], days: Int ): List[StockPrice] = {
