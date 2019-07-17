@@ -10,8 +10,8 @@ import scala.collection.immutable.ListMap
 
 object StockAnalysis extends App {
   val input_csv_filename:   String  = if (args.length >= 1) args(0) else "../data/stocks/Mid_Cap/MUTHOOTFIN.csv"
-  val output_csv_filename:  String  = if (args.length >= 2) args(1) else "../data/output/week2-scala.csv"
-  val output_json_filename: String  = if (args.length >= 3) args(2) else "../data/output/week2-scala.json"
+  val output_csv_filename:  String  = if (args.length >= 2) args(1) else "../data_output/module_1/week2-scala.csv"
+  val output_json_filename: String  = if (args.length >= 3) args(2) else "../data_output/module_1/week2-scala.json"
 
   var stockPrices: List[StockPrice] = StockPriceCSV.read(input_csv_filename)
 

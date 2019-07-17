@@ -34,7 +34,7 @@ class StockPrice(
   def calc_Day_Perc_Change( yesterday: StockPrice ): Double = {
     yesterday.Close_Price match {
       case 0 => 0
-      case _ => (Close_Price - yesterday.Close_Price) / yesterday.Close_Price
+      case _ => 100 * (Close_Price - yesterday.Close_Price) / yesterday.Close_Price
     }
   }
 

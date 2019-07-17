@@ -48,13 +48,41 @@
     "1 year": -15.32
   },
   "stats_quantity_trend": {
+    "Among top gainers": {
+      "mean": 18325335.07,
+      "median": 16580849
+    },
+    "Among top losers": {
+      "mean": 13153344.82,
+      "median": 12630191.5
+    },
+    "Bear drop": {
+      "mean": 40949285.33,
+      "median": 26369935
+    },
+    "Bull run": {
+      "mean": 15608306,
+      "median": 15608306
+    },
+    "Negative": {
+      "mean": 8404768.37,
+      "median": 6954188
+    },
+    "Positive": {
+      "mean": 11522694.14,
+      "median": 8671002
+    },
     "Slight": {
-      "mean": 9200115.12,
-      "median": 6610514
+      "mean": 6131717.69,
+      "median": 4611961
     },
     "Slight negative": {
-      "mean": 26369935,
-      "median": 26369935
+      "mean": 7615950.32,
+      "median": 5554096
+    },
+    "Slight positive": {
+      "mean": 7192586.26,
+      "median": 5655780
     }
   }
 }

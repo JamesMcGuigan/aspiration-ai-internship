@@ -6,7 +6,7 @@ object Main extends App {
 
   // Output single file as original specs
   StockAnalysis.main(Array(
-    "../data_output/module_1/scala/stocks/Mid_Cap/MUTHOOTFIN.csv",
+    "../data/stocks/Mid_Cap/MUTHOOTFIN.csv",
     "../data_output/module_1/week2-scala.csv",
     "../data_output/module_1/week2-scala.json"
   ))

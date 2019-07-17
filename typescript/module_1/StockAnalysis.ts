@@ -95,7 +95,7 @@ class StockAnalysis {
                 // NOTE: pandas.Series.pct_change() doesn't multiply Day_Perc_Change * 100
                 let Today_Price      = row['Close_Price'];
                 let Yesterday_Price  = _.chain(data).get(index-1).get("Close_Price").value() || Today_Price;
-                let Day_Perc_Change  = (Today_Price - Yesterday_Price) / Yesterday_Price     || 0;
+                let Day_Perc_Change  = 100 * (Today_Price - Yesterday_Price) / Yesterday_Price     || 0;
                 let Trend            = this.trend(Day_Perc_Change);
 
                 return { ...row, Day_Perc_Change, Trend };

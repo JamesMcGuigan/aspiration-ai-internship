@@ -27,8 +27,10 @@ class StockAnalysis:
 
 
         ### 1.6: Add a column 'Day_Perc_Change' where the values are the daily change in percentages
+        ### .pct_change() returns [0,1] based fraction rather than [0,100] based percentage
         self.data['Day_Perc_Change'] = self.data['Close_Price'].pct_change() \
                                            .map(lambda x: x if not math.isnan(x) else 0 ) \
+                                           .map(lambda x: x * 100     )  \
                                            .map(lambda x: round(x, 2) )
 
         ### 1.7: Add another column 'Trend' whose values
