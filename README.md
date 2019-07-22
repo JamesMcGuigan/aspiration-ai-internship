@@ -72,4 +72,27 @@ sbt "runMain module_1.StockAnalysis"
 ```
 
 
+## [Module 2](MODULE_2.md)
+
+- Data Visualization 
+  - Discrete Series Plot
+  - Line Charts
+  - Pie Charts
+  - Bar Charts
+  - Histograms
+  - Correlation Matrix
+
+- Calculations
+  - Rolling Volatility
+  - Beta vs Index
+  - Simple Moving Average
+  - Bollinger Bands
+  
+
+#### Python
+```
+cd python3
+source venv/bin/activate
+jupyter lab module_2/module_2.ipynb
+```
  
