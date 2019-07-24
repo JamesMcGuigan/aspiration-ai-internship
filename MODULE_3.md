@@ -47,8 +47,8 @@ Using linear regression (OLS), calculate
 
 Then answer:
 - Refrain from using the (covariance(x,y)/variance(x)) formula. 
-- Attempt the question using regression.(Regression 
-- Reference) 
+- Attempt the question using regression.
+  ([Regression Reference](https://financetrain.com/calculating-beta-using-market-model-regression-slope/))
 - Were the Beta values more or less than 1 ? 
 - What if it was negative ? Discuss. 
 - Include a brief writeup in the bottom of your jupyter notebook with your inferences from the Beta values and
