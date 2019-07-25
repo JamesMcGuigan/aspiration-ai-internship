@@ -27,5 +27,7 @@ numpy
 pandas
 simplejson
 seaborn
+sklearn
+cached_property
 
 
