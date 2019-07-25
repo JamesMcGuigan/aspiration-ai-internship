@@ -1,6 +1,8 @@
-# Module 1
+# Module 1 
 
-## Introduction to the problem
+## CSV Data Pipeline and Statistics
+
+Introduction to the problem
 
 In Module 1, you are going to get familiar with pandas, the python module which is used to process and analyse data. Processing could include removing unknown values from the data or replacing unknown values with values which make sense, maybe 0. Analysing the data could include finding out the trend of a stock price, e.g. how the stock price changes with respect to the Nifty 50 basket of stocks.
 
