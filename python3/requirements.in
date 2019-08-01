@@ -25,9 +25,11 @@ glob2
 jupyterlab
 numpy
 pandas
+statsmodels
 simplejson
 seaborn
 sklearn
 cached_property
+
 
 
