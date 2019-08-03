@@ -25,18 +25,6 @@ model, complete the entire column.
 if the predictions are accurate. Mention which column is a linear function and which is polynomial. (Hint: Plotting a
 histogram & distplot helps in recognizing the discrepencies in prediction, if any.) 
 
-CAPM CAPM Analysis and Beta
-
-Calculation using regression - CAPM(Capital Asset Pricing Model) attempts to price securities by examining the
-relationship that exists between expected returns and risk. 
-- [CAPM on Investopedia](https://www.investopedia.com/terms/c/capm.asp)
-
-
-The Beta of an asset is a measure of the sensitivity of its returns relative to a market benchmark (usually a market
-index). How sensitive/insensitive is the returns of an asset to the overall market returns (usually a market index like
-S&P 500 index). What happens when the market jumps, does the returns of the asset jump accordingly or jump somehow? 
-- [Beta on Investopedia](https://www.investopedia.com/investing/beta-know-risk/) 
-
 ---
 
 3.2 Import the stock of your choosing AND the Nifty index. 
@@ -53,3 +41,17 @@ Then answer:
 - What if it was negative ? Discuss. 
 - Include a brief writeup in the bottom of your jupyter notebook with your inferences from the Beta values and
   regression results
+
+---
+
+CAPM Analysis and Beta
+
+Calculation using regression - CAPM(Capital Asset Pricing Model) attempts to price securities by examining the
+relationship that exists between expected returns and risk. 
+- [CAPM on Investopedia](https://www.investopedia.com/terms/c/capm.asp)
+
+
+The Beta of an asset is a measure of the sensitivity of its returns relative to a market benchmark (usually a market
+index). How sensitive/insensitive is the returns of an asset to the overall market returns (usually a market index like
+S&P 500 index). What happens when the market jumps, does the returns of the asset jump accordingly or jump somehow? 
+- [Beta on Investopedia](https://www.investopedia.com/investing/beta-know-risk/) 

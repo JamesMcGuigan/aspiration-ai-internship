@@ -96,3 +96,32 @@ source venv/bin/activate
 jupyter lab module_2/module_2.ipynb
 ```
  
+
+## [Module 3](MODULE_3.md)
+
+- Linear Regression
+  - Split / Score / Predict 
+  - Correlation Coefficient
+  - Polynomial Features
+
+
+#### Python
+```
+cd python3
+source venv/bin/activate
+jupyter lab module_3/module_3.ipynb
+```
+
+
+## [Module 4](MODULE_4.md)
+
+- Classification
+- RandomForest
+
+
+#### Python
+```
+cd python3
+source venv/bin/activate
+jupyter lab module_4/module_4.ipynb
+```
