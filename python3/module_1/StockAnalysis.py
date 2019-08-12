@@ -63,7 +63,7 @@ class StockAnalysis:
     def write_csv(self, output_csv_filename: str):
         ### 1.9 SAVE the dataframe with the additional columns computed as a csv file
         self.ensure_directory(output_csv_filename)
-        self.data.to_csv(output_csv_filename)
+        self.data.to_csv(output_csv_filename, index=False)
         print('Wrote: ', output_csv_filename)
         return self  # for chaining
 
