@@ -30,6 +30,9 @@ simplejson
 seaborn
 sklearn
 cached_property
+scikit-optimize
+scikit-optimize[plots]
+pyyaml                     # required by scikit-optimize
 
 
 
