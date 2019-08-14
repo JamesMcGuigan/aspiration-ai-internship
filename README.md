@@ -43,6 +43,7 @@ sbt run
 
 ## [Module 1](MODULE_1.md)
 
+CSV Data Pipeline
 - Read input CSV file
 - Cast string dates to datetime objects
 - Compute additional feature columns
@@ -74,7 +75,7 @@ sbt "runMain module_1.StockAnalysis"
 
 ## [Module 2](MODULE_2.md)
 
-- Data Visualization 
+Data Visualization 
   - Discrete Series Plot
   - Line Charts
   - Pie Charts
@@ -82,7 +83,7 @@ sbt "runMain module_1.StockAnalysis"
   - Histograms
   - Correlation Matrix
 
-- Calculations
+Calculations
   - Rolling Volatility
   - Beta vs Index
   - Simple Moving Average
@@ -99,10 +100,10 @@ jupyter lab module_2/module_2.ipynb
 
 ## [Module 3](MODULE_3.md)
 
-- Linear Regression
-  - Split / Score / Predict 
-  - Correlation Coefficient
-  - Polynomial Features
+Fundamental Analysis using Linear Regression
+- Split / Score / Predict 
+- Correlation Coefficient
+- Polynomial Features
 
 
 #### Python
@@ -115,8 +116,9 @@ jupyter lab module_3/module_3.ipynb
 
 ## [Module 4](MODULE_4.md)
 
-- Classification
-- RandomForest
+Trade Call Prediction using Classification
+- Classification Comparison
+- Random Forest
 
 
 #### Python
@@ -124,4 +126,35 @@ jupyter lab module_3/module_3.ipynb
 cd python3
 source venv/bin/activate
 jupyter lab module_4/module_4.ipynb
+```
+
+
+## [Module 5](MODULE_5.md)
+
+Modern Portfolio Theory
+- Annualized Volatility and Returns
+- Covariance Matrix
+- Monty-Carlo Simulation
+- Scikit-Optimize
+
+
+#### Python
+```
+cd python3
+source venv/bin/activate
+jupyter lab module_5/module_5.ipynb
+```
+
+
+## [Module 6](MODULE_6.md)
+
+Clustering for Diversification Analysis 
+- K-means clustering
+- Elbow curve method
+
+#### Python
+```
+cd python3
+source venv/bin/activate
+jupyter lab module_6/module_6.ipynb
 ```
