@@ -2,9 +2,12 @@
 
 
 ## Welcome
-[http://www.aspiration.ai/machine-learning/internship/]
+http://www.aspiration.ai/machine-learning/internship/
 
-Investment Bankers . CA's . Hedge Fund / Portfolio Managers . Forex traders . Commodities Analysts. These have been historically considered to be among the most coveted professions of all time. Yet, if one fails to keep up with the demands of the day, one would find one's skills to be obsolete in this era of data analysis.
+Investment Bankers, CA's, Hedge Fund / Portfolio Managers, Forex traders, Commodities Analysts. 
+
+These have been historically considered to be among the most coveted professions of all time. Yet, if one fails to keep
+up with the demands of the day, one would find one's skills to be obsolete in this era of data analysis.
 
 Data Science has inarguably been the hottest domain of the decade, asserting its need in every single sphere of corporate life. It was not long agowhen we discovered the massive potential of incorporating ML/AI in the financial world. Now, the very idea of the two being disjointed sounds strange.
 
@@ -63,8 +66,8 @@ python3 ./module_1/main.py
 ```
 
 #### Typescript
-- [./typescript/module_1/index.ts](module_1/index.ts)
-- [./typescript/module_1/StockAnalysis.ts](module_1/StockAnalysis.ts)
+- [./typescript/module_1/index.ts](./typescript/module_1/index.ts)
+- [./typescript/module_1/StockAnalysis.ts](./typescript/module_1/StockAnalysis.ts)
 ```
 cd typescript
 yarn start:module_1
