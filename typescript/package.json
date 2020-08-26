@@ -19,7 +19,7 @@
     "datejs": "^1.0.0-rc3",
     "fs-jetpack": "^2.2.2",
     "glob": "^7.1.4",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "simple-statistics": "^7.0.2"
   },
   "devDependencies": {
